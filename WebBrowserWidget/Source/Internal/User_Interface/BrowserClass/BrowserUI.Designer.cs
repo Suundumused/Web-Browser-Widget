@@ -31,13 +31,13 @@
             panel1 = new Panel();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel2 = new Panel();
+            button5 = new Button();
             button8 = new Button();
             button7 = new Button();
             textBox1 = new TextBox();
             button3 = new Button();
             button2 = new Button();
             button4 = new Button();
-            button5 = new Button();
             button6 = new Button();
             button1 = new Button();
             panel1.SuspendLayout();
@@ -78,13 +78,13 @@
             panel2.AutoSize = true;
             panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel2.BackColor = Color.OrangeRed;
+            panel2.Controls.Add(button5);
             panel2.Controls.Add(button8);
             panel2.Controls.Add(button7);
             panel2.Controls.Add(textBox1);
             panel2.Controls.Add(button3);
             panel2.Controls.Add(button2);
             panel2.Controls.Add(button4);
-            panel2.Controls.Add(button5);
             panel2.Controls.Add(button6);
             panel2.Controls.Add(button1);
             panel2.Dock = DockStyle.Top;
@@ -99,6 +99,23 @@
             panel2.MouseDown += move_mouse_Down;
             panel2.MouseMove += mouse_move_Up;
             // 
+            // button5
+            // 
+            button5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            button5.BackColor = Color.Transparent;
+            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
+            button5.BackgroundImageLayout = ImageLayout.Stretch;
+            button5.Cursor = Cursors.Hand;
+            button5.FlatAppearance.BorderSize = 0;
+            button5.FlatStyle = FlatStyle.Flat;
+            button5.Location = new Point(698, 0);
+            button5.Margin = new Padding(0);
+            button5.Name = "button5";
+            button5.Size = new Size(48, 48);
+            button5.TabIndex = 9;
+            button5.UseVisualStyleBackColor = false;
+            button5.MouseUp += Go_Forward;
+            // 
             // button8
             // 
             button8.BackColor = Color.Transparent;
@@ -107,7 +124,7 @@
             button8.Cursor = Cursors.Hand;
             button8.FlatAppearance.BorderSize = 0;
             button8.FlatStyle = FlatStyle.Flat;
-            button8.Location = new Point(182, 0);
+            button8.Location = new Point(230, 0);
             button8.Margin = new Padding(0);
             button8.Name = "button8";
             button8.Size = new Size(48, 48);
@@ -120,9 +137,10 @@
             button7.BackgroundImage = (Image)resources.GetObject("button7.BackgroundImage");
             button7.BackgroundImageLayout = ImageLayout.Stretch;
             button7.Cursor = Cursors.Hand;
+            button7.Dock = DockStyle.Right;
             button7.FlatAppearance.BorderSize = 0;
             button7.FlatStyle = FlatStyle.Flat;
-            button7.Location = new Point(230, 0);
+            button7.Location = new Point(947, 0);
             button7.Margin = new Padding(0);
             button7.Name = "button7";
             button7.Size = new Size(48, 48);
@@ -147,6 +165,7 @@
             textBox1.Size = new Size(400, 27);
             textBox1.TabIndex = 3;
             textBox1.WordWrap = false;
+            textBox1.KeyDown += Swap_Forward;
             // 
             // button3
             // 
@@ -158,7 +177,7 @@
             button3.FlatAppearance.BorderSize = 0;
             button3.FlatStyle = FlatStyle.Flat;
             button3.ForeColor = Color.Transparent;
-            button3.Location = new Point(947, 0);
+            button3.Location = new Point(995, 0);
             button3.Margin = new Padding(0);
             button3.Name = "button3";
             button3.Size = new Size(48, 48);
@@ -194,31 +213,13 @@
             button4.FlatAppearance.BorderSize = 0;
             button4.FlatStyle = FlatStyle.Flat;
             button4.ForeColor = Color.Transparent;
-            button4.Location = new Point(995, 0);
+            button4.Location = new Point(1043, 0);
             button4.Margin = new Padding(0);
             button4.Name = "button4";
             button4.Size = new Size(48, 48);
             button4.TabIndex = 4;
             button4.UseVisualStyleBackColor = false;
             button4.MouseUp += Maximize_Window;
-            // 
-            // button5
-            // 
-            button5.BackColor = Color.Transparent;
-            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
-            button5.BackgroundImageLayout = ImageLayout.Stretch;
-            button5.Cursor = Cursors.Hand;
-            button5.Dock = DockStyle.Right;
-            button5.FlatAppearance.BorderSize = 0;
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.ForeColor = Color.Transparent;
-            button5.Location = new Point(1043, 0);
-            button5.Margin = new Padding(0);
-            button5.Name = "button5";
-            button5.Size = new Size(48, 48);
-            button5.TabIndex = 5;
-            button5.UseVisualStyleBackColor = false;
-            button5.MouseUp += End_Application;
             // 
             // button6
             // 
@@ -265,6 +266,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(250, 250);
             Name = "BrowserUI";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             TransparencyKey = Color.LavenderBlush;
             Load += Form1_Load;
@@ -287,9 +289,9 @@
         public Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         public TextBox textBox1;
         public Button button4;
-        public Button button5;
         public Button button6;
         public Button button7;
         public Button button8;
+        public Button button5;
     }
 }

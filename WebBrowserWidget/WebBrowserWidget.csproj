@@ -1,17 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup Label="Globals">
+    <WebView2DispatchAdapterUseJavaScriptCase>True</WebView2DispatchAdapterUseJavaScriptCase>
+  </PropertyGroup>
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <CefSharpAnyCpuSupport>True</CefSharpAnyCpuSupport>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <ApplicationIcon>Assets\ico\rodentia-icons_preferences-system-windows.ico</ApplicationIcon>
+    <Authors>Caio Silva</Authors>
+    <Company>Suundumused</Company>
+    <Title>Browser Widget</Title>
+    <Copyright>Personal use only</Copyright>
+    <PackageProjectUrl>https://github.com/Suundumused/Web-Browser-Widget</PackageProjectUrl>
+    <PackageIcon>large128x.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Suundumused/Web-Browser-Widget</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.MD</PackageReadmeFile>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseFile>LICENSE.rst</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Assets\ico\rodentia-icons_preferences-system-windows.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Source\Internal\User_Interface\Master\" />
-    <Folder Include="Source\Public\Utils\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\LICENSE.rst">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.MD">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +62,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\ico\16x.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\ico\large128x.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

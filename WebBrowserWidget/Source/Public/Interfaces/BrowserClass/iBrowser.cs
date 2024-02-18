@@ -2,6 +2,6 @@
 {
     public interface iBrowser
     {
-        public abstract static void init();
+        public abstract static void init(dynamic? masterObject = null);
     }
 }

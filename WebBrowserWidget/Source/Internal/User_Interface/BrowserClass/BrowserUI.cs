@@ -1,41 +1,21 @@
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using Microsoft.Web.WebView2.Core;
-using Microsoft.Web.WebView2.WinForms;
-using Microsoft.Web.WebView2.Wpf;
-using WebBrowserWidget.Source.Internal.BrowserClass;
-using WebBrowserWidget.Source.Public.Interfaces.BrowserClass;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using System.Reflection;
+using WebBrowserWidget.Source.Internal.Local;
+using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget
 {
     public partial class BrowserUI : Form
     {
-        public List<Thread>? Instances;
-        public Int64 I { get; set; }
-
         public Point mouseLocation;
 
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.Style &= ~0xC00000;
-                return cp;
-            }
-        }
-
-        public BrowserUI()
+        public BrowserUI(dynamic? masterObject = null)
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.ControlBox = false;
             InitializeComponent();
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.ResizeRedraw, true);
-            //webView21.CoreWebView2InitializationCompleted += WebView21_CoreWebView2InitializationCompleted;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -43,23 +23,21 @@ namespace WebBrowserWidget
             StartInstance();
         }
 
-        /*private void WebView21_CoreWebView2InitializationCompleted(object sender, CoreWebView2InitializationCompletedEventArgs e)
-        {
-            // WebView2 initialization completed
-            if (e.IsSuccess)
-            {
-                // WebView2 is ready to be used
-            }
-            else
-            {
-                // Handle initialization failure
-                MessageBox.Show($"WebView2 initialization failed. Error: {e.InitializationException}");
-            }
-        }*/
-
         private async Task InitBrowser()
         {
-            await webView21.EnsureCoreWebView2Async();
+            string? base_path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            if (base_path == null || base_path == "") 
+            {
+                base_path = AppContext.BaseDirectory;
+            }
+
+            string browseExe = Path.Combine(base_path, "Runtime", "Microsoft.WebView2.FixedVersionRuntime.121.0.2277.128.x86");
+            string cacheFolder = Path.Combine(Program.basepath, "User", "Cache");
+
+            //CoreWebView2Environment cwv2Environment = await CoreWebView2Environment.CreateAsync(browseExe, Path.Combine(Program.basepath, "Data"), new CoreWebView2EnvironmentOptions("--autoplay-    policy=no-user-gesture-required"));
+            CoreWebView2Environment cwv2Environment = await CoreWebView2Environment.CreateAsync(null, Path.Combine(Program.basepath, "Data"), new CoreWebView2EnvironmentOptions("--autoplay-    policy=no-user-gesture-required"));
+            await webView21.EnsureCoreWebView2Async(cwv2Environment);
         }
 
         public async void StartInstance()
@@ -91,7 +69,7 @@ namespace WebBrowserWidget
 
         private void NewInstance(object sender, EventArgs e)
         {
-
+            //old
         }
 
         private void End_Application(object sender, MouseEventArgs e)
@@ -143,5 +121,49 @@ namespace WebBrowserWidget
             ThreadA.SetApartmentState(ApartmentState.STA);
             ThreadA.Start();
         }
+
+        private void Go_Forward(object sender, MouseEventArgs e)
+        {
+
+            webView21.CoreWebView2.Navigate(extract_URL());
+        }
+
+        private void Swap_Forward(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                webView21.CoreWebView2.Navigate(extract_URL());
+            }
+        }
+
+        public string extract_URL()
+        {
+            if (textBox1.Text.Contains("://") && textBox1.Text.Contains("."))
+            {
+                return textBox1.Text;
+            }
+            else if (textBox1.Text.Contains("://"))
+            {
+                return $"{textBox1.Text}.com";
+            }
+            else if (textBox1.Text.Contains("."))
+            {
+                return $"https://{textBox1.Text}";
+            }
+            else
+            {
+                return $"https://www.google.com/search?q={textBox1.Text}";
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        /*private void autoStartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }*/
     }
 }

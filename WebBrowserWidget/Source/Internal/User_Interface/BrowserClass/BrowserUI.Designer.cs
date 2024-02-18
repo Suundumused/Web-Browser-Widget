@@ -31,7 +31,6 @@
             panel1 = new Panel();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel2 = new Panel();
-            button5 = new Button();
             button8 = new Button();
             button7 = new Button();
             textBox1 = new TextBox();
@@ -78,7 +77,6 @@
             panel2.AutoSize = true;
             panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel2.BackColor = Color.OrangeRed;
-            panel2.Controls.Add(button5);
             panel2.Controls.Add(button8);
             panel2.Controls.Add(button7);
             panel2.Controls.Add(textBox1);
@@ -98,23 +96,6 @@
             panel2.TabIndex = 0;
             panel2.MouseDown += move_mouse_Down;
             panel2.MouseMove += mouse_move_Up;
-            // 
-            // button5
-            // 
-            button5.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button5.BackColor = Color.Transparent;
-            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
-            button5.BackgroundImageLayout = ImageLayout.Stretch;
-            button5.Cursor = Cursors.Hand;
-            button5.FlatAppearance.BorderSize = 0;
-            button5.FlatStyle = FlatStyle.Flat;
-            button5.Location = new Point(698, 0);
-            button5.Margin = new Padding(0);
-            button5.Name = "button5";
-            button5.Size = new Size(48, 48);
-            button5.TabIndex = 9;
-            button5.UseVisualStyleBackColor = false;
-            button5.MouseUp += Go_Forward;
             // 
             // button8
             // 
@@ -292,6 +273,5 @@
         public Button button6;
         public Button button7;
         public Button button8;
-        public Button button5;
     }
 }

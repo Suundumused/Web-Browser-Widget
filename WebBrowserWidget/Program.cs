@@ -16,7 +16,7 @@ namespace WebBrowserWidget
         [STAThread]
         static void Main()
         {
-            Master Mananger = new Master();
+            Master Manager = new Master();
 
             try
             {
@@ -31,20 +31,12 @@ namespace WebBrowserWidget
                 System.Environment.Exit(1);
             }
 
-            Thread MasterThread = new Thread(() => Mananger.init());
+            Thread MasterThread = new Thread(() => Manager.init());
             MasterThread.Start();
 
-            Thread ThreadA = new Thread(() => NewThread(Mananger));
-            ThreadA.SetApartmentState(ApartmentState.STA);
-            ThreadA.Start();
+            SpawnActor.CreateInstance(Manager);
 
             MasterThread.Join();
-        }
-
-        public static void NewThread(dynamic ?masterObject = null) 
-        {
-            ApplicationConfiguration.Initialize();
-            Browser.init(masterObject);
         }
     }
 }

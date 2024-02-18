@@ -7,10 +7,20 @@ namespace WebBrowserWidget
 {
     public partial class BrowserUI : Form
     {
+        public dynamic? manager;
+
         public Point mouseLocation;
 
-        public BrowserUI(dynamic? masterObject = null)
+        public string? myDeferral { get; set; } = null;
+
+        public string h_path {get;} = Path.Combine(Program.basepath, "Data", "historic.csv");
+
+        public BrowserUI(dynamic? masterObject = null, string ?Deferral = null)
         {
+            myDeferral = Deferral;
+            manager = masterObject;
+            manager.Instances.Add(this);
+
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.ControlBox = false;
             InitializeComponent();
@@ -40,10 +50,27 @@ namespace WebBrowserWidget
             await webView21.EnsureCoreWebView2Async(cwv2Environment);
         }
 
+        private void CoreWebView2_NewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)
+        {
+            //e.NewWindow = (CoreWebView2)sender;
+            SpawnActor.CreateInstance(manager, e.Uri);
+            e.Handled = true;
+        }
+
         public async void StartInstance()
         {
             await InitBrowser();
-            webView21.CoreWebView2.Navigate("https://www.google.com");
+            webView21.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+            if (myDeferral != null)
+            {
+                webView21.CoreWebView2.Navigate(myDeferral);
+                BringToFront();
+                Activate();
+            }
+            else
+            {
+                webView21.CoreWebView2.Navigate("https://www.google.com");
+            }
         }
 
 
@@ -64,6 +91,7 @@ namespace WebBrowserWidget
 
         private void close_called(object sender, MouseEventArgs e)
         {
+            manager.Instances.Remove(this);
             this.Close();
         }
 
@@ -117,9 +145,7 @@ namespace WebBrowserWidget
 
         private void New_Window(object sender, MouseEventArgs e)
         {
-            Thread ThreadA = new Thread(() => Program.NewThread());
-            ThreadA.SetApartmentState(ApartmentState.STA);
-            ThreadA.Start();
+            SpawnActor.CreateInstance(manager);
         }
 
         private void Go_Forward(object sender, MouseEventArgs e)
@@ -160,10 +186,5 @@ namespace WebBrowserWidget
         {
             Application.Exit();
         }
-
-        /*private void autoStartToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }*/
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
+﻿using System.Reflection;
 using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget.Source.Internal.Local
@@ -87,11 +85,15 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         private void Clear_Historic(object? sender, EventArgs e)
         {
-            string h_path = Path.Combine(Program.basepath, "Data", "historic.csv");
-            if (File.Exists(h_path))
+            try
             {
-                File.Delete(h_path);
+                string h_path = Path.Combine(Program.basepath, "User", "historic.csv");
+                if (File.Exists(h_path))
+                {
+                    File.Delete(h_path);
+                }
             }
+            catch {}
         }
 
         private void List_Instances(object? sender, EventArgs e)

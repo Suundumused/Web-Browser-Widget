@@ -8,7 +8,6 @@ namespace WebBrowserWidget.Source.Internal.BrowserClass
         public static void init(dynamic? masterObject = null, string ?Deferral = null)
         {
             Form BrowserUI = new BrowserUI(masterObject, Deferral);
-            //BrowserUI.Opacity = 0.67;
 
             try 
             {

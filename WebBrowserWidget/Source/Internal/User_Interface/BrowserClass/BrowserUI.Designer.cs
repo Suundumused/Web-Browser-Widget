@@ -31,14 +31,15 @@
             panel1 = new Panel();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel2 = new Panel();
+            button5 = new Button();
             button8 = new Button();
             button7 = new Button();
             textBox1 = new TextBox();
-            button3 = new Button();
             button2 = new Button();
             button4 = new Button();
             button6 = new Button();
             button1 = new Button();
+            button3 = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             panel2.SuspendLayout();
@@ -76,15 +77,16 @@
             // 
             panel2.AutoSize = true;
             panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel2.BackColor = Color.OrangeRed;
+            panel2.BackColor = Color.LightSalmon;
+            panel2.Controls.Add(button5);
             panel2.Controls.Add(button8);
             panel2.Controls.Add(button7);
             panel2.Controls.Add(textBox1);
-            panel2.Controls.Add(button3);
             panel2.Controls.Add(button2);
             panel2.Controls.Add(button4);
             panel2.Controls.Add(button6);
             panel2.Controls.Add(button1);
+            panel2.Controls.Add(button3);
             panel2.Dock = DockStyle.Top;
             panel2.ForeColor = Color.Transparent;
             panel2.Location = new Point(0, 0);
@@ -96,6 +98,23 @@
             panel2.TabIndex = 0;
             panel2.MouseDown += move_mouse_Down;
             panel2.MouseMove += mouse_move_Up;
+            // 
+            // button5
+            // 
+            button5.BackColor = Color.Transparent;
+            button5.BackgroundImage = (Image)resources.GetObject("button5.BackgroundImage");
+            button5.BackgroundImageLayout = ImageLayout.Stretch;
+            button5.Cursor = Cursors.Hand;
+            button5.Dock = DockStyle.Right;
+            button5.FlatAppearance.BorderSize = 0;
+            button5.FlatStyle = FlatStyle.Flat;
+            button5.Location = new Point(899, 0);
+            button5.Margin = new Padding(0);
+            button5.Name = "button5";
+            button5.Size = new Size(48, 48);
+            button5.TabIndex = 9;
+            button5.UseVisualStyleBackColor = false;
+            button5.MouseUp += Local_Settings;
             // 
             // button8
             // 
@@ -148,24 +167,6 @@
             textBox1.WordWrap = false;
             textBox1.KeyDown += Swap_Forward;
             // 
-            // button3
-            // 
-            button3.BackColor = Color.Transparent;
-            button3.BackgroundImage = (Image)resources.GetObject("button3.BackgroundImage");
-            button3.BackgroundImageLayout = ImageLayout.Stretch;
-            button3.Cursor = Cursors.Hand;
-            button3.Dock = DockStyle.Right;
-            button3.FlatAppearance.BorderSize = 0;
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.ForeColor = Color.Transparent;
-            button3.Location = new Point(995, 0);
-            button3.Margin = new Padding(0);
-            button3.Name = "button3";
-            button3.Size = new Size(48, 48);
-            button3.TabIndex = 2;
-            button3.UseVisualStyleBackColor = false;
-            button3.MouseUp += close_called;
-            // 
             // button2
             // 
             button2.BackColor = Color.Transparent;
@@ -181,7 +182,6 @@
             button2.Size = new Size(48, 48);
             button2.TabIndex = 1;
             button2.UseVisualStyleBackColor = false;
-            button2.Click += NewInstance;
             button2.MouseUp += Browser_advance;
             // 
             // button4
@@ -194,7 +194,7 @@
             button4.FlatAppearance.BorderSize = 0;
             button4.FlatStyle = FlatStyle.Flat;
             button4.ForeColor = Color.Transparent;
-            button4.Location = new Point(1043, 0);
+            button4.Location = new Point(995, 0);
             button4.Margin = new Padding(0);
             button4.Name = "button4";
             button4.Size = new Size(48, 48);
@@ -236,17 +236,36 @@
             button1.UseVisualStyleBackColor = false;
             button1.MouseUp += Browser_back;
             // 
+            // button3
+            // 
+            button3.BackColor = Color.Transparent;
+            button3.BackgroundImage = (Image)resources.GetObject("button3.BackgroundImage");
+            button3.BackgroundImageLayout = ImageLayout.Stretch;
+            button3.Cursor = Cursors.Hand;
+            button3.Dock = DockStyle.Right;
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.ForeColor = Color.Transparent;
+            button3.Location = new Point(1043, 0);
+            button3.Margin = new Padding(0);
+            button3.Name = "button3";
+            button3.Size = new Size(48, 48);
+            button3.TabIndex = 2;
+            button3.UseVisualStyleBackColor = false;
+            button3.MouseUp += close_called;
+            // 
             // BrowserUI
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.Black;
             ClientSize = new Size(1091, 607);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(250, 250);
+            MinimumSize = new Size(518, 250);
             Name = "BrowserUI";
+            Opacity = 0.9D;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             TransparencyKey = Color.LavenderBlush;
@@ -273,5 +292,6 @@
         public Button button6;
         public Button button7;
         public Button button8;
+        public Button button5;
     }
 }

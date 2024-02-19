@@ -1,6 +1,6 @@
 using Microsoft.Web.WebView2.Core;
 using System.Reflection;
-using WebBrowserWidget.Source.Internal.Local;
+using WebBrowserWidget.Source.Internal.SettingsClass;
 using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget
@@ -13,9 +13,9 @@ namespace WebBrowserWidget
 
         public string? myDeferral { get; set; } = null;
 
-        public string h_path {get;} = Path.Combine(Program.basepath, "Data", "historic.csv");
+        public string h_path { get; } = Path.Combine(Program.basepath, "Data", "historic.csv");
 
-        public BrowserUI(dynamic? masterObject = null, string ?Deferral = null)
+        public BrowserUI(dynamic? masterObject = null, string? Deferral = null)
         {
             myDeferral = Deferral;
             manager = masterObject;
@@ -37,7 +37,7 @@ namespace WebBrowserWidget
         {
             string? base_path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            if (base_path == null || base_path == "") 
+            if (base_path == null || base_path == "")
             {
                 base_path = AppContext.BaseDirectory;
             }
@@ -95,11 +95,6 @@ namespace WebBrowserWidget
             this.Close();
         }
 
-        private void NewInstance(object sender, EventArgs e)
-        {
-            //old
-        }
-
         private void End_Application(object sender, MouseEventArgs e)
         {
             Application.Exit();
@@ -118,6 +113,11 @@ namespace WebBrowserWidget
         private void Navigation_Completed(object sender, CoreWebView2NavigationCompletedEventArgs e)
         {
             textBox1.Text = webView21.Source.ToString();
+
+            DateTime currentDateTime = DateTime.Now;
+            string formattedDateTime = currentDateTime.ToString("dd MMMM yyyy HH:mm");
+
+            db_manager.AddColumnsAndRows(Path.Combine(Program.basepath, "User", "historic.csv"), (formattedDateTime, webView21.Source.ToString()));
         }
 
         private void Maximize_Window(object sender, MouseEventArgs e)
@@ -182,9 +182,9 @@ namespace WebBrowserWidget
             }
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Local_Settings(object sender, MouseEventArgs e)
         {
-            Application.Exit();
+            Settings.Sets(this);
         }
     }
 }

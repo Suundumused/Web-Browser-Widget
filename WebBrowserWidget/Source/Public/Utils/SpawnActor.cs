@@ -9,17 +9,17 @@ namespace WebBrowserWidget.Source.Public.Utils
 {
     public static class SpawnActor
     {
-        public static void CreateInstance(dynamic? manager, string ? Deferral = null) 
+        public static void CreateInstance(dynamic? manager, string ? Deferral = null, dynamic ?configs=null)
         {
-            Thread ThreadA = new Thread(() => NewThread(manager, Deferral));
+            Thread ThreadA = new Thread(() => NewThread(manager, Deferral, configs));
             ThreadA.SetApartmentState(ApartmentState.STA);
             ThreadA.Start();
         }
 
-        public static void NewThread(dynamic? masterObject = null, string? Deferral = null)
+        public static void NewThread(dynamic? masterObject = null, string? Deferral = null, dynamic? configs = null)
         {
             ApplicationConfiguration.Initialize();
-            Browser.init(masterObject, Deferral);
+            Browser.init(masterObject, Deferral, configs);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace WebBrowserWidget.Source.Internal.Local
     internal class Master
     {
         private NotifyIcon? Icon_x;
-        private string? ico_path { get; set; }
+        private string ico_path { get; set; } = "";
         private ToolStripMenuItem ?AutoBoot;
         private ToolStripMenuItem ?Objects;
 
@@ -18,13 +18,20 @@ namespace WebBrowserWidget.Source.Internal.Local
 
             string ?base_path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            if (base_path != null && base_path != "")
+            try
             {
-                ico_path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Assets", "ico", "16x.ico");
+                if (base_path != null && base_path != "")
+                {
+                    ico_path = Path.Combine(base_path, "Assets", "ico", "16x.ico");
+                }
+                else
+                {
+                    ico_path = Path.Combine(AppContext.BaseDirectory, "Assets", "ico", "16x.ico");
+                }
             }
-            else 
+            catch (Exception ex) 
             {
-                ico_path = Path.Combine(AppContext.BaseDirectory, "Assets", "ico", "16x.ico");
+                MsgClass.Init(ex.Message, MessageBoxIcon.Error);
             }
             SpawnTray(ico_path);
         }
@@ -62,6 +69,10 @@ namespace WebBrowserWidget.Source.Internal.Local
             Clear.Click += Clear_Historic;
             menuItem1.DropDownItems.Add(Clear);
 
+            ToolStripMenuItem setsclear = new ToolStripMenuItem("Clear settings");
+            setsclear.Click += Clear_Settings;
+            menuItem1.DropDownItems.Add(setsclear);
+
             ToolStripMenuItem menuItem2 = new ToolStripMenuItem("Exit");
             menuItem2.Click += Exit;
             contextMenu.Items.Add(menuItem2);
@@ -71,7 +82,7 @@ namespace WebBrowserWidget.Source.Internal.Local
 
             dynamic? data = AppSettings.ReadSettings();
 
-            if (data.AutoBoot)
+            if ((bool)data["AutoBoot"])
             {
                 AutoBoot.CheckState = CheckState.Checked;
             }
@@ -94,6 +105,19 @@ namespace WebBrowserWidget.Source.Internal.Local
                 }
             }
             catch {}
+        }
+
+        private void Clear_Settings(object? sender, EventArgs e)
+        {
+            try
+            {
+                string h_path = Path.Combine(Program.basepath, "Settings", "User_Settings.json");
+                if (File.Exists(h_path))
+                {
+                    File.Delete(h_path);
+                }
+            }
+            catch { }
         }
 
         private void List_Instances(object? sender, EventArgs e)
@@ -155,14 +179,14 @@ namespace WebBrowserWidget.Source.Internal.Local
         {
             dynamic? data = AppSettings.ReadSettings();
 
-            if (data.AutoBoot)
+            if ((bool)data["AutoBoot"])
             {
-                data.AutoBoot = false;
+                data["AutoBoot"] = false;
                 AutoBoot.CheckState = CheckState.Unchecked;
             }
             else
             {
-                data.AutoBoot = true;
+                data["AutoBoot"] = true;
                 AutoBoot.CheckState = CheckState.Checked;
             }
             AppSettings.WriteSettings(data);

@@ -1,13 +1,18 @@
 using Microsoft.Web.WebView2.Core;
 using System.Reflection;
+using WebBrowserWidget.Source.Internal.Customize;
+using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Internal.SettingsClass;
 using WebBrowserWidget.Source.Public.Utils;
+using static WebBrowserWidget.Source.Internal.Local.AppSettings;
 
 namespace WebBrowserWidget
 {
     public partial class BrowserUI : Form
     {
-        public dynamic? manager;
+        public dynamic manager;
+
+        public dynamic? local_configs { get; set; } = null;
 
         public Point mouseLocation;
 
@@ -15,8 +20,9 @@ namespace WebBrowserWidget
 
         public string h_path { get; } = Path.Combine(Program.basepath, "Data", "historic.csv");
 
-        public BrowserUI(dynamic? masterObject = null, string? Deferral = null)
+        public BrowserUI(dynamic masterObject, string? Deferral = null, dynamic? configs = null)
         {
+            local_configs = configs;
             myDeferral = Deferral;
             manager = masterObject;
             manager.Instances.Add(this);
@@ -30,6 +36,7 @@ namespace WebBrowserWidget
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Customize_Class.Customize(this, myDeferral, local_configs);
             StartInstance();
         }
 

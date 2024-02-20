@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Public.Utils;
 
@@ -5,9 +6,6 @@ namespace WebBrowserWidget
 {
     public static class Program
     {
-        private static NotifyIcon ?_trayIcon;
-        private static ContextMenuStrip ?_contextMenu;
-
         public static string basepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Web Widget");
 
         [STAThread]
@@ -31,8 +29,10 @@ namespace WebBrowserWidget
             Thread MasterThread = new Thread(() => Manager.init());
             MasterThread.Start();
 
-            SpawnActor.CreateInstance(Manager);
-
+            foreach (dynamic entry in AppSettings.ReadSettings()["Instances"])
+            {
+                SpawnActor.CreateInstance(Manager, configs: entry);
+            }
             MasterThread.Join();
         }
     }

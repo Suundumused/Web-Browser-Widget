@@ -10,24 +10,19 @@ namespace WebBrowserWidget.Source.Internal.Local
 {
     internal static class AppSettings
     {
-        public static Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>
-        {
-            { "AutoBoot", true },
-            { "Instances", new Dictionary<string, object>
-            {
-                { "Instance_0", new Dictionary<string, object>
-                {
-                    { "URL", "https://www.google.com/" },
-                    { "Maximized?", false },
-                    { "Sizes", "1107, 646" },
-                    { "Opacity", 0.9 },
-                    { "BarColor", "255, 160, 122" },
-                    { "Position", "-1, -1" }
-                }
-                }
-            }
-            }
-        };
+        public static JObject Properties = new JObject(
+            new JProperty("AutoBoot", true),
+            new JProperty("Instances", new JObject(
+                new JProperty("Instance_0", new JObject(
+                    new JProperty("URL", "https://www.google.com/"),
+                    new JProperty("Maximized?", false),
+                    new JProperty("Sizes", new JArray(1107, 646)),
+                    new JProperty("Opacity", 0.9),
+                    new JProperty("BarColor", new JArray(255, 160, 122)),
+                    new JProperty("Position", new JArray(-1, -1))
+                ))
+            ))
+        );
 
         public static string file_path = Path.Combine(Program.basepath, "Settings", "User_Settings.json");
 
@@ -55,7 +50,7 @@ namespace WebBrowserWidget.Source.Internal.Local
                 }
                 else
                 {
-                    return JObject.Parse("{" + string.Join(",", Properties.Select(kv => kv.Key + "=" + kv.Value).ToArray()) + "}");
+                    return Properties;
                 }
             }
             catch (Exception ex)
@@ -65,22 +60,20 @@ namespace WebBrowserWidget.Source.Internal.Local
             }
         }
 
-        public static void WriteSettings(object data)
+        public static void WriteSettings(dynamic data)
         {
             try
             {
-                JsonSerializerOptions options = new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                };
-
-                string jsonString = System.Text.Json.JsonSerializer.Serialize(data, options);
-
                 if (!UserSettingsExists())
                 {
                     using (File.Create(file_path)) { }
                 }
-                File.WriteAllText(file_path, jsonString);
+                using (StreamWriter file = File.CreateText(file_path))
+                using (JsonTextWriter writer = new JsonTextWriter(file))
+                {
+                    writer.Formatting = Formatting.Indented;
+                    data.WriteTo(writer);
+                };
             }
             catch (Exception e)
             {

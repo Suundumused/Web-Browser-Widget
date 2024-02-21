@@ -36,8 +36,14 @@ namespace WebBrowserWidget
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Customize_Class.Customize(this, myDeferral, local_configs);
+            myDeferral = Customize_Class.Customize(this, myDeferral, local_configs);
             StartInstance();
+        }
+
+        public System.Drawing.Rectangle MineMaximizedBounds 
+        { 
+            get { return MaximizedBounds; }
+            set { MaximizedBounds = value; }
         }
 
         private async Task InitBrowser()

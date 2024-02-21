@@ -16,7 +16,7 @@ namespace WebBrowserWidget.Source.Public.Utils
             ThreadA.Start();
         }
 
-        public static void NewThread(dynamic? masterObject = null, string? Deferral = null, dynamic? configs = null)
+        public static void NewThread(dynamic ?masterObject, string ?Deferral, dynamic ?configs)
         {
             ApplicationConfiguration.Initialize();
             Browser.init(masterObject, Deferral, configs);

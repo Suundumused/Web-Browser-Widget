@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using Newtonsoft.Json.Linq;
+using System.Reflection;
+using WebBrowserWidget.Source.Internal.Customize;
 using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget.Source.Internal.Local
@@ -10,7 +12,7 @@ namespace WebBrowserWidget.Source.Internal.Local
         private ToolStripMenuItem ?AutoBoot;
         private ToolStripMenuItem ?Objects;
 
-        public List<dynamic> ?Instances { get; set; }
+        public List<dynamic> Instances { get; set; } = [];
 
         public void init() 
         {
@@ -133,7 +135,7 @@ namespace WebBrowserWidget.Source.Internal.Local
                 }
                 else
                 {
-                    var my_browser = object_.webView21;
+                    dynamic my_browser = object_.webView21;
                     string URL = my_browser.Source.ToString();
                     string documentTitle = "";
 
@@ -172,6 +174,7 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         private void Exit(object sender, EventArgs e)
         {
+            Customize_Class.Save_Customs(Instances);
             Application.Exit();
         }
 

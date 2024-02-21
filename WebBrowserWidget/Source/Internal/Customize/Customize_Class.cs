@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Public.Interfaces.CustomsClass;
 using WebBrowserWidget.Source.Public.Utils;
 
@@ -11,38 +13,49 @@ namespace WebBrowserWidget.Source.Internal.Customize
 {
     internal class Customize_Class : iCustomsClass
     {
+        private static bool WinState(FormWindowState value)
+        {
+            if (value == FormWindowState.Maximized) 
+            {
+                return true;
+            }
+            else 
+            {
+                return false;
+            };
+        }
+
         public static string Customize(dynamic instance, string myDeferral, dynamic local_configs)
         {
             try
             {
                 if (local_configs != null)
                 {
-                    foreach (var key in local_configs)
+                    foreach (dynamic key in local_configs)
                     {
                         myDeferral = key["URL"];
 
                         if (key["Maximized?"] != false)
                         {
-                            //instance.MaximizedBounds = Screen.FromHandle(instance.Handle).WorkingArea;
+                            instance.MineMaximizedBounds = Screen.FromHandle(instance.Handle).WorkingArea;
                             instance.WindowState = FormWindowState.Maximized;
                         }
                         else
                         {
                             instance.WindowState = FormWindowState.Normal;
                         }
-
-                        string[] Values = Convert.ToString(key["Sizes"]).Replace(" ", "").Split(",");
-                        instance.Size = new Size(Convert.ToInt32(Values[0]), Convert.ToInt32(Values[1]));
+                        JArray sizesArray = (JArray)key["Sizes"];
+                        instance.Size = new Size(sizesArray[0].Value<int>(), sizesArray[1].Value<int>());
 
                         instance.Opacity = (float)key["Opacity"];
 
-                        string[] ValuesB = Convert.ToString(key["BarColor"]).Replace(" ", "").Split(",");
-                        instance.panel2.BackColor = Color.FromArgb(Convert.ToInt32(ValuesB[0]), Convert.ToInt32(ValuesB[1]), Convert.ToInt32(ValuesB[2]));
+                        JArray BarColorsArray = (JArray)key["BarColor"];
+                        instance.panel2.BackColor = Color.FromArgb(BarColorsArray[0].Value<int>(), BarColorsArray[1].Value<int>(), BarColorsArray[2].Value<int>());
 
-                        string[] ValuesC = Convert.ToString(key["Position"]).Replace(" ", "").Split(",");
-                        if (Convert.ToInt32(ValuesC[0]) > 0 && Convert.ToInt32(ValuesC[1]) > 0)
+                        JArray PositionArray = (JArray)key["Position"];
+                        if (PositionArray[0].Value<int>() > 0 && PositionArray[1].Value<int>() > 0)
                         {
-                            instance.Location = new Point(Convert.ToInt32(ValuesC[0]), Convert.ToInt32(ValuesC[1]));
+                            instance.Location = new Point(PositionArray[0].Value<int>(), PositionArray[1].Value<int>());
                         };
                     };
                 };
@@ -52,6 +65,41 @@ namespace WebBrowserWidget.Source.Internal.Customize
                 MsgClass.Init(ex.Message, MessageBoxIcon.Error);
             }
             return myDeferral;
+        }
+
+        public static void Save_Customs(dynamic Instances) 
+        {
+            try
+            {
+                dynamic? data = AppSettings.ReadSettings();
+
+                List<JObject> dicts_list = new List<JObject>();
+
+                foreach (dynamic obj in Instances)
+                {
+                    dicts_list.Add(new JObject(
+                        new JProperty("URL", obj.webView21.Source),
+                        new JProperty("Maximized?", WinState(obj.WindowState)),
+                        new JProperty("Sizes", new JArray(obj.Size.Width, obj.Size.Height)),
+                        new JProperty("Opacity", obj.Opacity),
+                        new JProperty("BarColor", new JArray(obj.panel2.BackColor.R, obj.panel2.BackColor.G, obj.panel2.BackColor.B)),
+                        new JProperty("Position", new JArray(obj.Location.X, obj.Location.Y))
+                        )
+                    );
+                };
+
+                int i = 0;
+                foreach (JObject dict in dicts_list) 
+                {
+                    data["Instances"][$"Instance_{i}"] = dict;
+                    i++;
+                };
+                AppSettings.WriteSettings(data);
+            }
+            catch (Exception ex)
+            {
+                MsgClass.Init(ex.Message, MessageBoxIcon.Error);
+            };
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
 using WebBrowserWidget.Source.Public.Utils;
 
@@ -16,6 +15,7 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         public void init() 
         {
+            Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
             Instances = new List<dynamic>();
 
             string ?base_path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -36,6 +36,11 @@ namespace WebBrowserWidget.Source.Internal.Local
                 MsgClass.Init(ex.Message, MessageBoxIcon.Error);
             }
             SpawnTray(ico_path);
+        }
+
+        private void Application_ApplicationExit(object? sender, EventArgs e)
+        {
+            Customize_Class.Save_Customs(Instances);
         }
 
         private void SpawnTray(string ico_path) 
@@ -95,7 +100,6 @@ namespace WebBrowserWidget.Source.Internal.Local
 
             Application.Run();
         }
-
         private void Clear_Historic(object? sender, EventArgs e)
         {
             try
@@ -155,7 +159,7 @@ namespace WebBrowserWidget.Source.Internal.Local
                         documentTitle = "Loading...";
                     }
                     ToolStripMenuItem Item = new ToolStripMenuItem(documentTitle);
-                    Item.Click += (sender, e) => browser_focus(sender, e, object_);
+                    Item.Click += (object? sender, EventArgs e) => browser_focus(sender, e, object_);
                     Objects.DropDownItems.Add(Item);
                 }
                 i++;
@@ -174,7 +178,6 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         private void Exit(object sender, EventArgs e)
         {
-            Customize_Class.Save_Customs(Instances);
             Application.Exit();
         }
 

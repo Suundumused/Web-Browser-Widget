@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Net.Http.Json;
-using System.Text.Json;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebBrowserWidget.Source.Public.Utils;
 
@@ -40,7 +36,7 @@ namespace WebBrowserWidget.Source.Internal.Local
             }
         }
 
-        public static dynamic ReadSettings()
+        public static JObject ReadSettings()
         {
             try
             {
@@ -60,7 +56,7 @@ namespace WebBrowserWidget.Source.Internal.Local
             }
         }
 
-        public static void WriteSettings(dynamic data)
+        public static void WriteSettings(JObject data)
         {
             try
             {

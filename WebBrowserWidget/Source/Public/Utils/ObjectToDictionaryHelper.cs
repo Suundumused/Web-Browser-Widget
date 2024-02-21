@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WebBrowserWidget.Source.Public.Utils
 {
@@ -18,7 +15,7 @@ namespace WebBrowserWidget.Source.Public.Utils
         {
             if (source == null) ThrowExceptionWhenSourceArgumentIsNull();
 
-            var dictionary = new Dictionary<string, T>();
+            Dictionary<string, T>? dictionary = new Dictionary<string, T>();
             foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(source))
             {
                 object value = property.GetValue(source);

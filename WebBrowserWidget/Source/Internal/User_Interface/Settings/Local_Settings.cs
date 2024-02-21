@@ -1,21 +1,25 @@
-﻿namespace WebBrowserWidget.Source.Internal.User_Interface.Settings
+﻿using System;
+using System.Reflection;
+
+namespace WebBrowserWidget.Source.Internal.User_Interface.Settings
 {
     public partial class Local_Settings : Form
     {
-        private dynamic? myParent { get; set; } = null;
+        private dynamic myParent { get; set; }
 
-        public Local_Settings(dynamic? Parent)
+        public Local_Settings(dynamic Parent)
         {
             myParent = Parent;
-
             InitializeComponent();
+            UpdateUI();
             BringToFront();
             Activate();
         }
 
         private void Change_Opacity(object sender, EventArgs e)
         {
-            myParent.Opacity = Convert.ToInt32(trackBar1.Value) / 10f;
+            int trackbar_value = trackBar1.Value;
+            myParent.Invoke(new System.Windows.Forms.MethodInvoker(delegate { myParent.SetOpacity(Convert.ToInt32(trackbar_value) / 10f); }));
         }
 
         private void Change_Color(object sender, MouseEventArgs e)
@@ -26,6 +30,11 @@
             {
                 myParent.panel2.BackColor = colorDialog1.Color;
             }
+        }
+
+        private void UpdateUI() 
+        {
+            trackBar1.Value = Convert.ToInt32(myParent.Opacity * 10);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace WebBrowserWidget.Source.Internal.BrowserClass
 {
     internal class Browser : iBrowser
     {
-        public static void init(dynamic? masterObject = null, string ?Deferral = null, dynamic? configs = null)
+        public static void Init(dynamic masterObject, string ?Deferral = null, dynamic? configs = null)
         {
             Form BrowserUI = new BrowserUI(masterObject, Deferral, configs);
 
@@ -17,10 +17,7 @@ namespace WebBrowserWidget.Source.Internal.BrowserClass
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Error, false);
                 System.Environment.Exit(1);
-            }
-            //Control panel1 = BrowserUI.Controls.Find("panel1", true)[0];
-            //panel1.BackColor = BrowserUI.BackColor = Color.FromArgb((int)(0.6 * 255), BrowserUI.BackColor.R, BrowserUI.BackColor.G, BrowserUI.BackColor.B);
-            //BrowserUI.Focus();
+            };
         }
     }
 }

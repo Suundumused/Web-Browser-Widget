@@ -1,10 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Public.Interfaces.CustomsClass;
 using WebBrowserWidget.Source.Public.Utils;
@@ -71,7 +65,7 @@ namespace WebBrowserWidget.Source.Internal.Customize
         {
             try
             {
-                dynamic? data = AppSettings.ReadSettings();
+                JObject data = AppSettings.ReadSettings();
 
                 List<JObject> dicts_list = new List<JObject>();
 
@@ -87,6 +81,13 @@ namespace WebBrowserWidget.Source.Internal.Customize
                         )
                     );
                 };
+
+                JObject? mineinstances = data["Instances"] as JObject;
+                List<JProperty>? propertiesToDelete = mineinstances.Properties().Where(p => p.Name.StartsWith("Instance_")).ToList();
+                foreach (JProperty property in propertiesToDelete)
+                {
+                    property.Remove();
+                }
 
                 int i = 0;
                 foreach (JObject dict in dicts_list) 

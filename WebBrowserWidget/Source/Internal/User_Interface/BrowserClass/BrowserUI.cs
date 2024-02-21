@@ -1,23 +1,19 @@
 using Microsoft.Web.WebView2.Core;
 using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
-using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Internal.SettingsClass;
 using WebBrowserWidget.Source.Public.Utils;
-using static WebBrowserWidget.Source.Internal.Local.AppSettings;
 
 namespace WebBrowserWidget
 {
     public partial class BrowserUI : Form
     {
         public dynamic manager;
-
         public dynamic? local_configs { get; set; } = null;
 
         public Point mouseLocation;
 
         public string? myDeferral { get; set; } = null;
-
         public string h_path { get; } = Path.Combine(Program.basepath, "Data", "historic.csv");
 
         public BrowserUI(dynamic masterObject, string? Deferral = null, dynamic? configs = null)
@@ -30,14 +26,25 @@ namespace WebBrowserWidget
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             this.ControlBox = false;
             InitializeComponent();
+            this.FormClosing += MainForm_FormClosing;
             this.DoubleBuffered = true;
             SetStyle(ControlStyles.ResizeRedraw, true);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Customize_Class.Save_Customs(manager.Instances);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             myDeferral = Customize_Class.Customize(this, myDeferral, local_configs);
             StartInstance();
+        }
+
+        public void SetOpacity(float newValue) 
+        {
+            Opacity = newValue;
         }
 
         public System.Drawing.Rectangle MineMaximizedBounds 
@@ -86,7 +93,6 @@ namespace WebBrowserWidget
             }
         }
 
-
         private void move_mouse_Down(object sender, MouseEventArgs e)
         {
             mouseLocation = new Point(-e.X, e.Y);
@@ -130,7 +136,7 @@ namespace WebBrowserWidget
             DateTime currentDateTime = DateTime.Now;
             string formattedDateTime = currentDateTime.ToString("dd MMMM yyyy HH:mm");
 
-            db_manager.AddColumnsAndRows(Path.Combine(Program.basepath, "User", "historic.csv"), (formattedDateTime, webView21.Source.ToString()));
+            db_manager.AddColumnsAndRows(Path.Combine(Program.basepath, "User", "historic.csv"), (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
         }
 
         private void Maximize_Window(object sender, MouseEventArgs e)

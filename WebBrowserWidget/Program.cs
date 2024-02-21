@@ -9,7 +9,7 @@ namespace WebBrowserWidget
         public static string basepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Web Widget");
 
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Master Manager = new Master();
 

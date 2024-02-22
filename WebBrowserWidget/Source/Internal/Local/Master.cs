@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
+using WebBrowserWidget.Source.Internal.Master;
 using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget.Source.Internal.Local
@@ -9,6 +11,9 @@ namespace WebBrowserWidget.Source.Internal.Local
         private NotifyIcon? Icon_x;
 
         private string ico_path { get; set; } = "";
+        private string h_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
+
+        public bool OnFavorites { get; set; } = false;
 
         private ToolStripMenuItem ?AutoBoot;
         private ToolStripMenuItem ?Objects;
@@ -89,6 +94,10 @@ namespace WebBrowserWidget.Source.Internal.Local
             setsclear.Click += Clear_Settings;
             menuItem1.DropDownItems.Add(setsclear);
 
+            ToolStripMenuItem historic = new ToolStripMenuItem("Historic");
+            historic.Click += History;
+            contextMenu.Items.Add(historic);
+
             ToolStripMenuItem menuItem2 = new ToolStripMenuItem("Exit");
             menuItem2.Click += Exit;
             contextMenu.Items.Add(menuItem2);
@@ -109,11 +118,20 @@ namespace WebBrowserWidget.Source.Internal.Local
 
             Application.Run();
         }
+
+        private void History(object? sender, EventArgs e)
+        {
+            if (!OnFavorites)
+            {
+                OnFavorites = true;
+                ListClass.Init(this, db_manager.ReadCSV(h_path), "Historic", "navigate");
+            };
+        }
+
         private void Clear_Historic(object? sender, EventArgs e)
         {
             try
             {
-                string h_path = Path.Combine(Program.basepath, "User", "historic.csv");
                 if (File.Exists(h_path))
                 {
                     File.Delete(h_path);
@@ -148,29 +166,33 @@ namespace WebBrowserWidget.Source.Internal.Local
                 }
                 else
                 {
-                    dynamic my_browser = object_.webView21;
-                    string URL = my_browser.Source.ToString();
-                    string documentTitle = "";
-
                     try
                     {
-                        if (URL.Contains("www."))
+                        dynamic my_browser = object_.webView21;
+                        string URL = my_browser.Source.ToString();
+                        string documentTitle = "";
+
+                        try
                         {
-                            documentTitle = URL.Split("www.")[1].Split(".")[0];
+                            if (URL.Contains("www."))
+                            {
+                                documentTitle = URL.Split("www.")[1].Split(".")[0];
+                            }
+                            else
+                            {
+                                documentTitle = URL.Split("://")[1].Split(".")[0];
+                            }
                         }
-                        else
+                        catch
                         {
-                            documentTitle = URL.Split("://")[1].Split(".")[0];
+                            documentTitle = "Loading...";
                         }
+                        ToolStripMenuItem Item = new ToolStripMenuItem(documentTitle);
+                        Item.Click += (object? sender, EventArgs e) => browser_focus(sender, e, object_);
+                        Objects.DropDownItems.Add(Item);
                     }
-                    catch 
-                    {
-                        documentTitle = "Loading...";
-                    }
-                    ToolStripMenuItem Item = new ToolStripMenuItem(documentTitle);
-                    Item.Click += (object? sender, EventArgs e) => browser_focus(sender, e, object_);
-                    Objects.DropDownItems.Add(Item);
-                }
+                    catch { }
+                };
                 i++;
             }
         }

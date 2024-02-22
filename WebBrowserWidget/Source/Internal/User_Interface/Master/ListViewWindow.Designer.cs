@@ -29,28 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListViewWindow));
-            colorDialog1 = new ColorDialog();
-            vScrollBar1 = new VScrollBar();
             panel1 = new Panel();
             SuspendLayout();
             // 
-            // colorDialog1
-            // 
-            colorDialog1.AnyColor = true;
-            colorDialog1.Color = Color.LightSalmon;
-            colorDialog1.ShowHelp = true;
-            // 
-            // vScrollBar1
-            // 
-            vScrollBar1.Cursor = Cursors.SizeNS;
-            vScrollBar1.Dock = DockStyle.Right;
-            vScrollBar1.Location = new Point(456, 0);
-            vScrollBar1.Name = "vScrollBar1";
-            vScrollBar1.Size = new Size(17, 450);
-            vScrollBar1.TabIndex = 0;
-            // 
             // panel1
             // 
+            panel1.AutoScroll = true;
             panel1.AutoSize = true;
             panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel1.BackColor = Color.Transparent;
@@ -59,7 +43,7 @@
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(4, 9, 0, 9);
-            panel1.Size = new Size(456, 450);
+            panel1.Size = new Size(473, 450);
             panel1.TabIndex = 1;
             // 
             // ListViewWindow
@@ -69,21 +53,19 @@
             BackColor = Color.MediumTurquoise;
             ClientSize = new Size(473, 450);
             Controls.Add(panel1);
-            Controls.Add(vScrollBar1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ListViewWindow";
             Opacity = 0.9D;
             StartPosition = FormStartPosition.CenterScreen;
             TransparencyKey = Color.Sienna;
+            FormClosing += OnClose;
             Load += UpdateUI;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        public ColorDialog colorDialog1;
-        private VScrollBar vScrollBar1;
         private Panel panel1;
     }
 }

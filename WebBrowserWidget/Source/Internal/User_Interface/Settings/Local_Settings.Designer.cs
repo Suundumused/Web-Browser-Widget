@@ -190,6 +190,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Local Settings";
             TransparencyKey = Color.Sienna;
+            FormClosing += OnClose;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);

@@ -28,8 +28,28 @@
             catch (IOException)
             {
                 return true;
-            }
-        } 
+            };
+        }
+        
+        public static List<string> ReadCSV(string filePath) 
+        {
+            try
+            {
+                if (File.Exists(filePath))
+                {
+                    return new List<string>(File.ReadAllLines(filePath));
+                }
+                else
+                {
+                    return new List<string>();
+                };
+
+            }catch(Exception ex) 
+            {
+                MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+                return new List<string>();
+            };
+        }
 
         private static void AddRowToCsv(string filePath, string[] rowData)
         {
@@ -38,7 +58,7 @@
                 if (!File.Exists(filePath))
                 {
                     File.WriteAllText(filePath, string.Join(",", GetColumnNames()) + Environment.NewLine);
-                }
+                };
 
                 if (!IsLastDuplicate(filePath, rowData))
                 {
@@ -46,12 +66,12 @@
                     {
                         streamWriter.WriteLine(string.Join(",", rowData));
                     }
-                }
+                };
             }
             catch(Exception ex) 
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
-            }
+            };
         }
 
         private static string[] GetColumnNames()

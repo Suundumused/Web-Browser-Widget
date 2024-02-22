@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace WebBrowserWidget.Source.Internal.User_Interface.Settings
@@ -26,15 +27,20 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Settings
         {
             colorDialog1.Color = myParent.panel2.BackColor;
 
-            if (colorDialog1.ShowDialog() == DialogResult.OK) 
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 myParent.panel2.BackColor = colorDialog1.Color;
             }
         }
 
-        private void UpdateUI() 
+        private void UpdateUI()
         {
             trackBar1.Value = Convert.ToInt32(myParent.Opacity * 10);
+        }
+
+        private void OnClose(object sender, FormClosingEventArgs e)
+        {
+            myParent.OnSettings = false;
         }
     }
 }

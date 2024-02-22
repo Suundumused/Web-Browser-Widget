@@ -22,8 +22,7 @@ namespace WebBrowserWidget.Source.Internal.SettingsClass
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Error, false);
                 System.Environment.Exit(1);
-            }
-
+            };
         }
     }
 }

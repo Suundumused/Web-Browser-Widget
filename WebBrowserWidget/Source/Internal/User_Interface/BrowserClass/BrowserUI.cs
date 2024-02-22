@@ -9,13 +9,16 @@ namespace WebBrowserWidget
 {
     public partial class BrowserUI : Form
     {
+        public bool OnSettings { get; set; } = false;
+        public bool OnFavorites { get; set; } = false;
         public dynamic manager;
         public dynamic? local_configs { get; set; } = null;
 
-        public Point mouseLocation;
+        protected Point mouseLocation;
 
         public string? myDeferral { get; set; } = null;
-        public string h_path { get; } = Path.Combine(Program.basepath, "Data", "historic.csv");
+        protected string h_path { get; } = Path.Combine(Program.basepath, "Data", "historic.csv");
+        protected string f_path { get; } = Path.Combine(Program.basepath, "Data", "favorites.csv");
 
         public BrowserUI(dynamic masterObject, string? Deferral = null, dynamic? configs = null)
         {
@@ -92,14 +95,14 @@ namespace WebBrowserWidget
                 {
                     webView21.CoreWebView2.Navigate("https://www.google.com");
                     MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
-                }
+                };
                 BringToFront();
                 Activate();
             }
             else
             {
                 webView21.CoreWebView2.Navigate("https://www.google.com");
-            }
+            };
         }
 
         private void move_mouse_Down(object sender, MouseEventArgs e)
@@ -114,7 +117,7 @@ namespace WebBrowserWidget
                 Point mousePose = Control.MousePosition;
                 mousePose.Offset(mouseLocation.X, mouseLocation.Y - 50);
                 Location = mousePose;
-            }
+            };
         }
 
         private void close_called(object sender, MouseEventArgs e)
@@ -145,7 +148,7 @@ namespace WebBrowserWidget
             DateTime currentDateTime = DateTime.Now;
             string formattedDateTime = currentDateTime.ToString("dd MMMM yyyy HH:mm");
 
-            db_manager.AddColumnsAndRows(Path.Combine(Program.basepath, "User", "historic.csv"), (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
+            db_manager.AddColumnsAndRows(h_path, (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
         }
 
         private void Maximize_Window(object sender, MouseEventArgs e)
@@ -163,7 +166,7 @@ namespace WebBrowserWidget
             else
             {
                 this.WindowState = FormWindowState.Normal;
-            }
+            };
         }
 
         private void Reload_Page(object sender, MouseEventArgs e)
@@ -185,7 +188,7 @@ namespace WebBrowserWidget
             catch (Exception ex)
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
-            }
+            };
         }
 
         private void Swap_Forward(object sender, KeyEventArgs e)
@@ -199,8 +202,8 @@ namespace WebBrowserWidget
                 catch (Exception ex) 
                 {
                     MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
-                }
-            }
+                };
+            };
         }
 
         public string extract_URL()
@@ -220,17 +223,25 @@ namespace WebBrowserWidget
             else
             {
                 return $"https://www.google.com/search?q={textBox1.Text}";
-            }
+            };
         }
 
         private void Local_Settings(object sender, MouseEventArgs e)
         {
-            Settings.Sets(this);
+            if (!OnSettings) 
+            {
+                OnSettings = true;
+                Settings.Sets(this);
+            };
         }
 
         private void Favorites_Pressed(object sender, MouseEventArgs e)
         {
-            ListClass.Init(this, ["https://www.google.com.us/", "http://www.aaaaa.com"], "title_test", "navigate");
+            if (!OnFavorites) 
+            {
+                OnFavorites = true;
+                ListClass.Init(this, db_manager.ReadCSV(f_path), "Favorites", "navigate");
+            };
         }
     }
 }

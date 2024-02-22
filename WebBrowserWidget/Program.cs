@@ -1,4 +1,3 @@
-using System.Windows.Forms;
 using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Public.Utils;
 

@@ -1,6 +1,7 @@
 using Microsoft.Web.WebView2.Core;
 using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
+using WebBrowserWidget.Source.Internal.Master;
 using WebBrowserWidget.Source.Internal.SettingsClass;
 using WebBrowserWidget.Source.Public.Utils;
 
@@ -42,13 +43,13 @@ namespace WebBrowserWidget
             StartInstance();
         }
 
-        public void SetOpacity(float newValue) 
+        public void SetOpacity(float newValue)
         {
             Opacity = newValue;
         }
 
-        public System.Drawing.Rectangle MineMaximizedBounds 
-        { 
+        public System.Drawing.Rectangle MineMaximizedBounds
+        {
             get { return MaximizedBounds; }
             set { MaximizedBounds = value; }
         }
@@ -83,7 +84,15 @@ namespace WebBrowserWidget
             webView21.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
             if (myDeferral != null)
             {
-                webView21.CoreWebView2.Navigate(myDeferral);
+                try
+                {
+                    webView21.CoreWebView2.Navigate(myDeferral);
+                }
+                catch (Exception ex) 
+                {
+                    webView21.CoreWebView2.Navigate("https://www.google.com");
+                    MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+                }
                 BringToFront();
                 Activate();
             }
@@ -169,15 +178,28 @@ namespace WebBrowserWidget
 
         private void Go_Forward(object sender, MouseEventArgs e)
         {
-
-            webView21.CoreWebView2.Navigate(extract_URL());
+            try
+            {
+                webView21.CoreWebView2.Navigate(extract_URL());
+            }
+            catch (Exception ex)
+            {
+                MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+            }
         }
 
         private void Swap_Forward(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                webView21.CoreWebView2.Navigate(extract_URL());
+                try
+                {
+                    webView21.CoreWebView2.Navigate(extract_URL());
+                }
+                catch (Exception ex) 
+                {
+                    MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -204,6 +226,11 @@ namespace WebBrowserWidget
         private void Local_Settings(object sender, MouseEventArgs e)
         {
             Settings.Sets(this);
+        }
+
+        private void Favorites_Pressed(object sender, MouseEventArgs e)
+        {
+            ListClass.Init(this, ["https://www.google.com.us/", "http://www.aaaaa.com"], "title_test", "navigate");
         }
     }
 }

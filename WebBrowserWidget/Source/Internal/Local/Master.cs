@@ -7,7 +7,9 @@ namespace WebBrowserWidget.Source.Internal.Local
     internal class Master
     {
         private NotifyIcon? Icon_x;
+
         private string ico_path { get; set; } = "";
+
         private ToolStripMenuItem ?AutoBoot;
         private ToolStripMenuItem ?Objects;
 
@@ -15,6 +17,7 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         public void init() 
         {
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
             Instances = new List<dynamic>();
 
@@ -30,12 +33,18 @@ namespace WebBrowserWidget.Source.Internal.Local
                 {
                     ico_path = Path.Combine(AppContext.BaseDirectory, "Assets", "ico", "16x.ico");
                 }
+                SpawnTray(ico_path);
             }
             catch (Exception ex) 
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Error);
+                System.Environment.Exit(1);
             }
-            SpawnTray(ico_path);
+        }
+
+        private void CurrentDomain_ProcessExit(object? sender, EventArgs e)
+        {
+            Customize_Class.Save_Customs(Instances);
         }
 
         private void Application_ApplicationExit(object? sender, EventArgs e)
@@ -131,7 +140,7 @@ namespace WebBrowserWidget.Source.Internal.Local
             Objects.DropDownItems.Clear();
 
             int i = 0;
-            foreach (var object_ in Instances)
+            foreach (dynamic object_ in Instances)
             {
                 if (object_ is null)
                 {

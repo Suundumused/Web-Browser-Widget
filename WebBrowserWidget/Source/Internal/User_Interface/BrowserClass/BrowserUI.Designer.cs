@@ -130,6 +130,7 @@
             button8.Size = new Size(48, 48);
             button8.TabIndex = 8;
             button8.UseVisualStyleBackColor = false;
+            button8.MouseUp += Favorites_Pressed;
             // 
             // button7
             // 

@@ -122,6 +122,7 @@ namespace WebBrowserWidget
 
         private void close_called(object sender, MouseEventArgs e)
         {
+            manager.Instances.Remove(this);
             this.Close();
         }
 
@@ -246,11 +247,6 @@ namespace WebBrowserWidget
         private void WhenClosed(object sender, FormClosedEventArgs e)
         {
             Thread.CurrentThread.Interrupt();
-        }
-
-        private void OnClose(object sender, FormClosingEventArgs e)
-        {
-            manager.Instances.Remove(this);
         }
     }
 }

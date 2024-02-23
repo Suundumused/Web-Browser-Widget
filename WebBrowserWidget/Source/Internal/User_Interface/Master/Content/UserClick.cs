@@ -56,5 +56,12 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master.Content
         {
             this.Dock = DockStyle.Top;
         }
+
+        private void Clicked(object sender, MouseEventArgs e)
+        {
+            Db_manager.RemoveLineIndex(MineParent.minePath, MineParent.AllButtons.IndexOf(this));
+            MineParent.AllButtons.Remove(this);
+            this.Dispose();
+        }
     }
 }

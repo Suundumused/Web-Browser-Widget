@@ -30,7 +30,23 @@
                 return true;
             };
         }
-        
+
+        public static void RemoveLineIndex(string filePath, long index = 0)
+        {
+            try
+            {
+                List<string>? lines = new List<string>(File.ReadAllLines(filePath));
+
+                lines.RemoveAt(Convert.ToInt32(index));
+                File.WriteAllLines(filePath, lines);
+
+            }
+            catch (Exception ex)
+            {
+                MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+            };
+        }
+
         public static List<string> ReadCSV(string filePath) 
         {
             try

@@ -11,6 +11,7 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Settings
         public Local_Settings(dynamic Parent)
         {
             myParent = Parent;
+            this.TopMost = true;
             InitializeComponent();
             UpdateUI();
             BringToFront();

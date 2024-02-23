@@ -186,6 +186,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Local_Settings";
+            Opacity = 0.95D;
             Padding = new Padding(3);
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Local Settings";

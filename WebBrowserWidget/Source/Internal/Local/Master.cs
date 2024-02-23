@@ -64,7 +64,11 @@ namespace WebBrowserWidget.Source.Internal.Local
             {
                 Icon_x.Icon = new Icon(ico_path);
             }
-            catch{}
+            catch (Exception ex)
+            {
+                MsgClass.Init(ex.Message, MessageBoxIcon.Error);
+                System.Environment.Exit(1);
+            }
             Icon_x.MouseClick += List_Instances;
             Icon_x.Visible = true;
             

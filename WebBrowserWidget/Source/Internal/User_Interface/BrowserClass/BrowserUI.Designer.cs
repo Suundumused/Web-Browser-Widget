@@ -269,7 +269,6 @@
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             TransparencyKey = Color.LavenderBlush;
-            FormClosing += OnClose;
             FormClosed += WhenClosed;
             Load += Form1_Load;
             panel1.ResumeLayout(false);

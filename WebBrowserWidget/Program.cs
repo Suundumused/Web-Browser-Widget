@@ -25,7 +25,7 @@ namespace WebBrowserWidget
                 System.Environment.Exit(1);
             }
 
-            Thread MasterThread = new Thread(() => Manager.init());
+            Thread MasterThread = new Thread(() => Manager.Init());
             MasterThread.Start();
 
             foreach (dynamic entry in AppSettings.ReadSettings()["Instances"])

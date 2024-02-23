@@ -1,6 +1,6 @@
 ﻿namespace WebBrowserWidget.Source.Public.Utils
 {
-    public class db_manager
+    public class Db_manager
     {
         private static (string, string) Keys { get; set; } = ("", "");
 

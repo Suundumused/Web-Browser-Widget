@@ -10,8 +10,8 @@ namespace WebBrowserWidget.Source.Internal.Local
     {
         private NotifyIcon? Icon_x;
 
-        private string ico_path { get; set; } = "";
-        private string h_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
+        private string Ico_path { get; set; } = "";
+        private string H_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
 
         public bool OnFavorites { get; set; } = false;
 
@@ -20,7 +20,7 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         public List<dynamic> Instances { get; set; } = [];
 
-        public void init() 
+        public void Init() 
         {
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
@@ -32,13 +32,13 @@ namespace WebBrowserWidget.Source.Internal.Local
             {
                 if (base_path != null && base_path != "")
                 {
-                    ico_path = Path.Combine(base_path, "Assets", "ico", "16x.ico");
+                    Ico_path = Path.Combine(base_path, "Assets", "ico", "16x.ico");
                 }
                 else
                 {
-                    ico_path = Path.Combine(AppContext.BaseDirectory, "Assets", "ico", "16x.ico");
+                    Ico_path = Path.Combine(AppContext.BaseDirectory, "Assets", "ico", "16x.ico");
                 }
-                SpawnTray(ico_path);
+                SpawnTray(Ico_path);
             }
             catch (Exception ex) 
             {
@@ -124,7 +124,7 @@ namespace WebBrowserWidget.Source.Internal.Local
             if (!OnFavorites)
             {
                 OnFavorites = true;
-                ListClass.Init(this, db_manager.ReadCSV(h_path), "Historic", "navigate");
+                ListClass.Init(this, Db_manager.ReadCSV(H_path), "Historic", "navigate");
             };
         }
 
@@ -132,9 +132,9 @@ namespace WebBrowserWidget.Source.Internal.Local
         {
             try
             {
-                if (File.Exists(h_path))
+                if (File.Exists(H_path))
                 {
-                    File.Delete(h_path);
+                    File.Delete(H_path);
                 }
             }
             catch {}

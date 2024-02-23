@@ -1,33 +1,39 @@
-﻿namespace WebBrowserWidget.Source.Internal.User_Interface.Master.Content
+﻿using WebBrowserWidget.Source.Public.Utils;
+
+namespace WebBrowserWidget.Source.Internal.User_Interface.Master.Content
 {
     public partial class UserClick : UserControl
     {
-        protected dynamic mineInstance { get; set; }
-        protected dynamic mineParent { get; set; }
+        protected dynamic MineInstance { get; set; }
+        protected dynamic MineParent { get; set; }
 
-        protected string mine_var { get; set; } = string.Empty;
-        protected string mine_event_type { get; set; } = string.Empty;
+        protected string Mine_var { get; set; } = string.Empty;
+        protected string Mine_event_type { get; set; } = string.Empty;
 
         public UserClick(dynamic Instance, dynamic parent, string variable = "", string event_type = "navigate")
         {
-            mineParent = parent;
-            mineInstance = Instance;
-            mine_var = variable;
-            mine_event_type = event_type;
+            MineParent = parent;
+            MineInstance = Instance;
+            Mine_var = variable.Replace(",", " - ");
+            Mine_event_type = event_type;
             InitializeComponent();
-            label1.Text = mine_var;
+            label1.Text = Mine_var;
         }
 
         private void event_click(object sender, MouseEventArgs e)
         {
-            if (mine_event_type == "navigate")
+            if (Mine_event_type == "navigate")
             {
                 try
                 {
-                    mineInstance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { mineInstance.webView21.CoreWebView2.Navigate(mine_var); }));
-                    mineParent.Close();
+                    MineInstance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { MineInstance.webView21.CoreWebView2.Navigate(Mine_var.Split("- ")[1]); }));
+                    MineParent.Close();
                 }
-                catch { }
+                catch
+                {
+                    SpawnActor.CreateInstance(MineInstance, Deferral: Mine_var.Split("- ")[1]);
+                    MineParent.Close();
+                }
             }
         }
 

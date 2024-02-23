@@ -12,18 +12,18 @@ namespace WebBrowserWidget
         public bool OnSettings { get; set; } = false;
         public bool OnFavorites { get; set; } = false;
         public dynamic manager;
-        public dynamic? local_configs { get; set; } = null;
+        public dynamic? Local_configs { get; set; } = null;
 
         protected Point mouseLocation;
 
-        public string? myDeferral { get; set; } = null;
-        protected string h_path { get; } = Path.Combine(Program.basepath, "Data", "historic.csv");
-        protected string f_path { get; } = Path.Combine(Program.basepath, "Data", "favorites.csv");
+        public string? MyDeferral { get; set; } = null;
+        protected string H_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
+        protected string F_path { get; } = Path.Combine(Program.basepath, "User", "favorites.csv");
 
         public BrowserUI(dynamic masterObject, string? Deferral = null, dynamic? configs = null)
         {
-            local_configs = configs;
-            myDeferral = Deferral;
+            Local_configs = configs;
+            MyDeferral = Deferral;
             manager = masterObject;
             manager.Instances.Add(this);
 
@@ -42,7 +42,7 @@ namespace WebBrowserWidget
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            myDeferral = Customize_Class.Customize(this, myDeferral, local_configs);
+            MyDeferral = Customize_Class.Customize(this, MyDeferral, Local_configs);
             StartInstance();
         }
 
@@ -85,13 +85,13 @@ namespace WebBrowserWidget
         {
             await InitBrowser();
             webView21.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
-            if (myDeferral != null)
+            if (MyDeferral != null)
             {
                 try
                 {
-                    webView21.CoreWebView2.Navigate(myDeferral);
+                    webView21.CoreWebView2.Navigate(MyDeferral);
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     webView21.CoreWebView2.Navigate("https://www.google.com");
                     MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
@@ -122,7 +122,6 @@ namespace WebBrowserWidget
 
         private void close_called(object sender, MouseEventArgs e)
         {
-            manager.Instances.Remove(this);
             this.Close();
         }
 
@@ -148,7 +147,7 @@ namespace WebBrowserWidget
             DateTime currentDateTime = DateTime.Now;
             string formattedDateTime = currentDateTime.ToString("dd MMMM yyyy HH:mm");
 
-            db_manager.AddColumnsAndRows(h_path, (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
+            Db_manager.AddColumnsAndRows(H_path, (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
         }
 
         private void Maximize_Window(object sender, MouseEventArgs e)
@@ -199,7 +198,7 @@ namespace WebBrowserWidget
                 {
                     webView21.CoreWebView2.Navigate(extract_URL());
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
                 };
@@ -228,7 +227,7 @@ namespace WebBrowserWidget
 
         private void Local_Settings(object sender, MouseEventArgs e)
         {
-            if (!OnSettings) 
+            if (!OnSettings)
             {
                 OnSettings = true;
                 Settings.Sets(this);
@@ -237,11 +236,21 @@ namespace WebBrowserWidget
 
         private void Favorites_Pressed(object sender, MouseEventArgs e)
         {
-            if (!OnFavorites) 
+            if (!OnFavorites)
             {
                 OnFavorites = true;
-                ListClass.Init(this, db_manager.ReadCSV(f_path), "Favorites", "navigate");
+                ListClass.Init(this, Db_manager.ReadCSV(F_path), "Favorites", "navigate");
             };
+        }
+
+        private void WhenClosed(object sender, FormClosedEventArgs e)
+        {
+            Thread.CurrentThread.Interrupt();
+        }
+
+        private void OnClose(object sender, FormClosingEventArgs e)
+        {
+            manager.Instances.Remove(this);
         }
     }
 }

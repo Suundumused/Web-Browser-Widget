@@ -262,7 +262,6 @@
             BackColor = Color.Black;
             ClientSize = new Size(1091, 607);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(518, 250);
             Name = "BrowserUI";
@@ -270,6 +269,8 @@
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             TransparencyKey = Color.LavenderBlush;
+            FormClosing += OnClose;
+            FormClosed += WhenClosed;
             Load += Form1_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

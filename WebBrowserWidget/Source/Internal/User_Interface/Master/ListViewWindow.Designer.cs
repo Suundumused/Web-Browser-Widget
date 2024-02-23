@@ -34,7 +34,6 @@
             // 
             // panel1
             // 
-            panel1.AutoScroll = true;
             panel1.AutoSize = true;
             panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel1.BackColor = Color.Transparent;
@@ -43,7 +42,7 @@
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(4, 9, 0, 9);
-            panel1.Size = new Size(473, 450);
+            panel1.Size = new Size(584, 450);
             panel1.TabIndex = 1;
             // 
             // ListViewWindow
@@ -51,16 +50,16 @@
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.MediumTurquoise;
-            ClientSize = new Size(473, 450);
+            ClientSize = new Size(584, 450);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ListViewWindow";
-            Opacity = 0.9D;
+            Opacity = 0.95D;
             StartPosition = FormStartPosition.CenterScreen;
             TransparencyKey = Color.Sienna;
             FormClosing += OnClose;
-            Load += UpdateUI;
+            Load += OnLoaded;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -183,6 +183,10 @@ namespace WebBrowserWidget.Source.Internal.Local
                 {
                     Instances.RemoveAt(i);
                 }
+                else if (object_.IsDisposed) 
+                {
+                    Instances.RemoveAt(i);
+                }
                 else
                 {
                     try
@@ -200,12 +204,12 @@ namespace WebBrowserWidget.Source.Internal.Local
                             else
                             {
                                 documentTitle = URL.Split("://")[1].Split(".")[0];
-                            }
+                            };
                         }
                         catch
                         {
                             documentTitle = "Loading...";
-                        }
+                        };
                         ToolStripMenuItem Item = new ToolStripMenuItem(documentTitle);
                         Item.Click += (object? sender, EventArgs e) => browser_focus(sender, e, object_);
                         Objects.DropDownItems.Add(Item);
@@ -213,7 +217,7 @@ namespace WebBrowserWidget.Source.Internal.Local
                     catch { }
                 };
                 i++;
-            }
+            };
         }
 
         private void browser_focus(object? sender, EventArgs e, dynamic index)

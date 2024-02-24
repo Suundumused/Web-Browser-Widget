@@ -16,6 +16,11 @@ namespace WebBrowserWidget.Source.Internal.Master
         {
             ListViewWindow ListView = new ListViewWindow(Instance, Content, title, event_type);
 
+            if (Instance is BrowserUI) 
+            {
+                Instance.MineFavorites = ListView;
+            }
+
             try
             {
                 Application.Run(ListView);

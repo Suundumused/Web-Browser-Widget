@@ -14,9 +14,16 @@ namespace WebBrowserWidget.Source.Internal.SettingsClass
 
         private static void Init(dynamic ?Parent) 
         {
+            Local_Settings mineSettings = new Local_Settings(Parent);
+
+            if (Parent is BrowserUI)
+            {
+                Parent.MineSettings = mineSettings;
+            };
+
             try
             {
-                Application.Run(new Local_Settings(Parent));
+                Application.Run(mineSettings);
             }
             catch (Exception ex)
             {

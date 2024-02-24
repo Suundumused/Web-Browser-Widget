@@ -3,6 +3,8 @@ using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
 using WebBrowserWidget.Source.Internal.Master;
 using WebBrowserWidget.Source.Internal.SettingsClass;
+using WebBrowserWidget.Source.Internal.User_Interface.Master;
+using WebBrowserWidget.Source.Internal.User_Interface.Settings;
 using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget
@@ -13,6 +15,8 @@ namespace WebBrowserWidget
         public bool OnFavorites { get; set; } = false;
         public dynamic manager;
         public dynamic? Local_configs { get; set; } = null;
+        public ListViewWindow? MineFavorites { get; set; } = null;
+        public Local_Settings? MineSettings { get; set; } = null; 
 
         protected Point mouseLocation;
 
@@ -250,6 +254,25 @@ namespace WebBrowserWidget
         private void WhenClosed(object sender, FormClosedEventArgs e)
         {
             Thread.CurrentThread.Interrupt();
+        }
+
+        private void WhenClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MineFavorites is not null)
+            {
+                if (!MineFavorites.IsDisposed)
+                {
+                    MineFavorites.Invoke(new System.Windows.Forms.MethodInvoker(delegate { MineFavorites.Close(); }));
+                };
+            };
+
+            if (MineSettings is not null)
+            {
+                if (!MineSettings.IsDisposed)
+                {
+                    MineSettings.Invoke(new System.Windows.Forms.MethodInvoker(delegate { MineSettings.Close(); }));
+                };
+            };
         }
     }
 }

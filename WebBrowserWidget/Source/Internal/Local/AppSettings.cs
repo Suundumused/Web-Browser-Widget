@@ -63,7 +63,7 @@ namespace WebBrowserWidget.Source.Internal.Local
                 if (!UserSettingsExists())
                 {
                     using (File.Create(file_path)) { }
-                }
+                };
                 using (StreamWriter file = File.CreateText(file_path))
                 using (JsonTextWriter writer = new JsonTextWriter(file))
                 {
@@ -74,7 +74,8 @@ namespace WebBrowserWidget.Source.Internal.Local
             catch (Exception e)
             {
                 MsgClass.Init(e.Message, MessageBoxIcon.Error);
-            }
+            };
+            GC.Collect();
         }
     }
 }

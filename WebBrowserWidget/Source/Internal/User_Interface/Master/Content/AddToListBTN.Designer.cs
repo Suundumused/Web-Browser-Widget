@@ -36,7 +36,7 @@
             button1.Dock = DockStyle.Fill;
             button1.FlatStyle = FlatStyle.System;
             button1.Font = new Font("Impact", 16F, FontStyle.Bold);
-            button1.Location = new Point(0, 0);
+            button1.Location = new Point(1, 0);
             button1.Margin = new Padding(0);
             button1.MaximumSize = new Size(0, 48);
             button1.MinimumSize = new Size(440, 48);
@@ -59,7 +59,7 @@
             MaximumSize = new Size(0, 48);
             MinimumSize = new Size(440, 48);
             Name = "AddToListBTN";
-            Padding = new Padding(0, 0, 3, 0);
+            Padding = new Padding(1, 0, 1, 0);
             Size = new Size(440, 48);
             ResumeLayout(false);
         }

@@ -71,15 +71,18 @@ namespace WebBrowserWidget.Source.Internal.Customize
 
                 foreach (dynamic obj in Instances)
                 {
-                    dicts_list.Add(new JObject(
-                        new JProperty("URL", obj.webView21.Source),
-                        new JProperty("Maximized?", WinState(obj.WindowState)),
-                        new JProperty("Sizes", new JArray(obj.Size.Width, obj.Size.Height)),
-                        new JProperty("Opacity", obj.Opacity),
-                        new JProperty("BarColor", new JArray(obj.panel2.BackColor.R, obj.panel2.BackColor.G, obj.panel2.BackColor.B)),
-                        new JProperty("Position", new JArray(obj.Location.X, obj.Location.Y))
-                        )
-                    );
+                    if (obj is not null) 
+                    {
+                        dicts_list.Add(new JObject(
+                            new JProperty("URL", obj.webView21.Source),
+                            new JProperty("Maximized?", WinState(obj.WindowState)),
+                            new JProperty("Sizes", new JArray(obj.Size.Width, obj.Size.Height)),
+                            new JProperty("Opacity", obj.Opacity),
+                            new JProperty("BarColor", new JArray(obj.panel2.BackColor.R, obj.panel2.BackColor.G, obj.panel2.BackColor.B)),
+                            new JProperty("Position", new JArray(obj.Location.X, obj.Location.Y))
+                            )
+                        );
+                    };     
                 };
 
                 JObject? mineinstances = data["Instances"] as JObject;

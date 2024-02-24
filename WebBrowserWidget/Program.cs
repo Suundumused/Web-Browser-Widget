@@ -1,3 +1,4 @@
+using Microsoft.Win32;
 using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Public.Utils;
 
@@ -5,7 +6,8 @@ namespace WebBrowserWidget
 {
     public static class Program
     {
-        public static string basepath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Web Widget");
+        public static string basepath { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Web Widget");
+        public static RegistryKey RegStart { get; } = Registry.CurrentUser.OpenSubKey(Path.Combine("SOFTWARE", "Microsoft", "Windows", "CurrentVersion", "Run"), true);
 
         [STAThread]
         static void Main(string[] args)

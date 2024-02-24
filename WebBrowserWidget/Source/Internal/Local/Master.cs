@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Microsoft.Win32;
+using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
 using WebBrowserWidget.Source.Internal.Master;
 using WebBrowserWidget.Source.Internal.User_Interface.About;
@@ -14,6 +15,8 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         private string Ico_path { get; set; } = "";
         private string H_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
+
+        public string? Base_path { get; set; } = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         public bool OnFavorites { get; set; } = false;
 
@@ -31,18 +34,12 @@ namespace WebBrowserWidget.Source.Internal.Local
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
             Instances = new List<dynamic>();
 
-            string ?base_path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
             try
             {
-                /*if (base_path != null && base_path != "")
+                if (Base_path == null || Base_path == "")
                 {
-                    Ico_path = Path.Combine(base_path, "Assets", "ico", "16x.ico");
+                    Base_path = AppContext.BaseDirectory;
                 }
-                else
-                {
-                    Ico_path = Path.Combine(AppContext.BaseDirectory, "Assets", "ico", "16x.ico");
-                }*/
                 SpawnTray();
             }
             catch (Exception ex) 
@@ -265,14 +262,30 @@ namespace WebBrowserWidget.Source.Internal.Local
 
             if ((bool)data["AutoBoot"])
             {
-                data["AutoBoot"] = false;
-                AutoBoot.CheckState = CheckState.Unchecked;
+                try
+                {
+                    Program.RegStart.DeleteValue("Web_Widget", false);
+                    data["AutoBoot"] = false;
+                    AutoBoot.CheckState = CheckState.Unchecked;
+
+                }catch (Exception ex) 
+                {
+                    MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+                };
             }
             else
             {
-                data["AutoBoot"] = true;
-                AutoBoot.CheckState = CheckState.Checked;
-            }
+                try
+                {
+                    Program.RegStart.SetValue("Web_Widget", Application.ExecutablePath.ToString());
+                    data["AutoBoot"] = true;
+                    AutoBoot.CheckState = CheckState.Checked;
+                }
+                catch (Exception ex)
+                {
+                    MsgClass.Init(ex.Message, MessageBoxIcon.Error);
+                };
+            };
             AppSettings.WriteSettings(data);
         }
     }

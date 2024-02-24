@@ -19,7 +19,7 @@ namespace WebBrowserWidget.Source.Internal.Master
             if (Instance is BrowserUI) 
             {
                 Instance.MineFavorites = ListView;
-            }
+            };
 
             try
             {

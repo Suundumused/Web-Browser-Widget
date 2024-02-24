@@ -118,7 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="richTextBox1.Text" xml:space="preserve">
-    <value>1. Definitions
+    <value>An ultra-light Internet Browser with multiple pop ups.
+
+1. Definitions
 ---------------
 
    - "Software" refers to the program provided under this license.

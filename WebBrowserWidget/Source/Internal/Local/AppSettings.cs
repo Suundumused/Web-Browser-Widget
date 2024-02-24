@@ -46,6 +46,7 @@ namespace WebBrowserWidget.Source.Internal.Local
                 }
                 else
                 {
+                    Program.RegStart.SetValue("Web_Widget", Application.ExecutablePath.ToString());
                     return Properties;
                 }
             }

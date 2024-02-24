@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
 using WebBrowserWidget.Source.Internal.Master;
+using WebBrowserWidget.Source.Internal.User_Interface.About;
 using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget.Source.Internal.Local
@@ -8,6 +9,8 @@ namespace WebBrowserWidget.Source.Internal.Local
     internal class Master
     {
         private NotifyIcon? Icon_x;
+
+        private AboutMe ?AboutOfMe { get; set; } = null;
 
         private string Ico_path { get; set; } = "";
         private string H_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
@@ -89,6 +92,10 @@ namespace WebBrowserWidget.Source.Internal.Local
             
             ContextMenuStrip contextMenu = new ContextMenuStrip();
 
+            ToolStripMenuItem AboutThis = new ToolStripMenuItem("About");
+            AboutThis.Click += AboutThisMe;
+            contextMenu.Items.Add(AboutThis);
+
             ToolStripMenuItem Instancer = new ToolStripMenuItem("New Window");
             Instancer.Click += New_Instance;
             contextMenu.Items.Add(Instancer);
@@ -136,6 +143,23 @@ namespace WebBrowserWidget.Source.Internal.Local
             }
 
             Application.Run();
+        }
+
+        private void AboutThisMe(object? sender, EventArgs e)
+        {
+            if (AboutOfMe is not null) 
+            {
+                if (AboutOfMe.IsDisposed) 
+                {
+                    AboutOfMe = new AboutMe();
+                    AboutOfMe.Show();
+                };
+            }
+            else 
+            {
+                AboutOfMe = new AboutMe();
+                AboutOfMe.Show();
+            };
         }
 
         private void History(object? sender, EventArgs e)

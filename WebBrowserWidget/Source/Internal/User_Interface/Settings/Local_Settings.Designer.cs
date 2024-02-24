@@ -183,8 +183,10 @@
             BackColor = Color.MediumTurquoise;
             ClientSize = new Size(473, 450);
             Controls.Add(splitContainer1);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "Local_Settings";
             Opacity = 0.95D;
             Padding = new Padding(3);

@@ -49,8 +49,8 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master
                     instance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { 
                                 try{
                                     UserClick new_button = new UserClick(instance.myParent, instance, thing, MineEventType);
-                                    panel1.Controls.Add(new_button);
-                                    AllButtons.Add(new_button);
+                                    instance.panel1.Controls.Add(new_button);
+                                    instance.AllButtons.Add(new_button);
                                     if (i == 0) 
                                     {
                                         new_button.Visible = false;
@@ -62,6 +62,14 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master
                     );
                     i++;
                 };
+
+                instance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { 
+                            try{
+                                instance.label1.Dispose();
+                            }catch{}
+                        }
+                    )
+                );
 
                 if (this.Text == "Favorites") 
                 {

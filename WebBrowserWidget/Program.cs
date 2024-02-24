@@ -10,6 +10,7 @@ namespace WebBrowserWidget
         [STAThread]
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
             Master Manager = new Master();
 
             try
@@ -23,7 +24,7 @@ namespace WebBrowserWidget
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Error, false);
                 System.Environment.Exit(1);
-            }
+            };
 
             Thread MasterThread = new Thread(() => Manager.Init());
             MasterThread.Start();
@@ -31,7 +32,7 @@ namespace WebBrowserWidget
             foreach (dynamic entry in AppSettings.ReadSettings()["Instances"])
             {
                 SpawnActor.CreateInstance(Manager, configs: entry);
-            }
+            };
             MasterThread.Join();
         }
     }

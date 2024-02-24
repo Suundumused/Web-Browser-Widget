@@ -29,15 +29,6 @@ namespace WebBrowserWidget.Source.Internal.Customize
                     {
                         myDeferral = key["URL"];
 
-                        if (key["Maximized?"] != false)
-                        {
-                            instance.MineMaximizedBounds = Screen.FromHandle(instance.Handle).WorkingArea;
-                            instance.WindowState = FormWindowState.Maximized;
-                        }
-                        else
-                        {
-                            instance.WindowState = FormWindowState.Normal;
-                        }
                         JArray sizesArray = (JArray)key["Sizes"];
                         instance.Size = new Size(sizesArray[0].Value<int>(), sizesArray[1].Value<int>());
 
@@ -47,10 +38,7 @@ namespace WebBrowserWidget.Source.Internal.Customize
                         instance.panel2.BackColor = Color.FromArgb(BarColorsArray[0].Value<int>(), BarColorsArray[1].Value<int>(), BarColorsArray[2].Value<int>());
 
                         JArray PositionArray = (JArray)key["Position"];
-                        if (PositionArray[0].Value<int>() > 0 && PositionArray[1].Value<int>() > 0)
-                        {
-                            instance.Location = new Point(PositionArray[0].Value<int>(), PositionArray[1].Value<int>());
-                        };
+                        instance.Location = new Point(PositionArray[0].Value<int>(), PositionArray[1].Value<int>());
                     };
                 };
             }
@@ -75,7 +63,6 @@ namespace WebBrowserWidget.Source.Internal.Customize
                     {
                         dicts_list.Add(new JObject(
                             new JProperty("URL", obj.webView21.Source),
-                            new JProperty("Maximized?", WinState(obj.WindowState)),
                             new JProperty("Sizes", new JArray(obj.Size.Width, obj.Size.Height)),
                             new JProperty("Opacity", obj.Opacity),
                             new JProperty("BarColor", new JArray(obj.panel2.BackColor.R, obj.panel2.BackColor.G, obj.panel2.BackColor.B)),

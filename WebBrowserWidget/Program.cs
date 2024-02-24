@@ -1,4 +1,6 @@
 using Microsoft.Win32;
+using System.Diagnostics;
+using System.Xml.Linq;
 using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Public.Utils;
 
@@ -12,6 +14,14 @@ namespace WebBrowserWidget
         [STAThread]
         static void Main(string[] args)
         {
+            Process currentProcess = Process.GetCurrentProcess();
+
+            if (Process.GetProcessesByName(currentProcess.ProcessName, currentProcess.MachineName).Length > 1)
+            {
+                MsgClass.Init("Another process is already running.", MessageBoxIcon.Warning, false);
+                System.Environment.Exit(1);
+            };
+
             Application.EnableVisualStyles();
             Master Manager = new Master();
 

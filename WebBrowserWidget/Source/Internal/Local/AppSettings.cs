@@ -11,7 +11,6 @@ namespace WebBrowserWidget.Source.Internal.Local
             new JProperty("Instances", new JObject(
                 new JProperty("Instance_0", new JObject(
                     new JProperty("URL", "https://www.google.com/"),
-                    new JProperty("Maximized?", false),
                     new JProperty("Sizes", new JArray(1107, 646)),
                     new JProperty("Opacity", 0.9),
                     new JProperty("BarColor", new JArray(255, 160, 122)),

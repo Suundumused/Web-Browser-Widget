@@ -26,6 +26,9 @@
     <PackageLicenseFile>LICENSE.rst</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <StartupObject>WebBrowserWidget.Program</StartupObject>
+    <PackageId>Web Widget</PackageId>
+    <Product>Web Widget</Product>
+    <AssemblyName>Web Widget</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

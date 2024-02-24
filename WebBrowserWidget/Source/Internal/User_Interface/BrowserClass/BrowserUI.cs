@@ -16,7 +16,7 @@ namespace WebBrowserWidget
         public dynamic manager;
         public dynamic? Local_configs { get; set; } = null;
         public ListViewWindow? MineFavorites { get; set; } = null;
-        public Local_Settings? MineSettings { get; set; } = null; 
+        public Local_Settings? MineSettings { get; set; } = null;
 
         protected Point mouseLocation;
 
@@ -158,20 +158,10 @@ namespace WebBrowserWidget
 
         private void Maximize_Window(object sender, MouseEventArgs e)
         {
-            if (this.WindowState == FormWindowState.Maximized)
-            {
-                this.WindowState = FormWindowState.Normal;
-            }
+            Rectangle area = Screen.FromHandle(this.Handle).WorkingArea;
 
-            else if (this.WindowState == FormWindowState.Normal)
-            {
-                this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
-                this.WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Normal;
-            };
+            this.Size = new System.Drawing.Size(area.Width, area.Height);
+            this.Location = new System.Drawing.Point(area.X, area.Y);
         }
 
         private void Reload_Page(object sender, MouseEventArgs e)

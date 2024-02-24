@@ -65,6 +65,7 @@
         }
 
         #endregion
-        private Panel panel1;
+
+        public Panel panel1;
     }
 }

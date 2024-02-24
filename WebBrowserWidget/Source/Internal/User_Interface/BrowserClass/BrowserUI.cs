@@ -66,7 +66,7 @@ namespace WebBrowserWidget
                 base_path = AppContext.BaseDirectory;
             }
 
-            string browseExe = Path.Combine(base_path, "Runtime", "Microsoft.WebView2.FixedVersionRuntime.121.0.2277.128.x86");
+            string browseExe = Path.Combine(base_path, "Runtime", "_version");
             string cacheFolder = Path.Combine(Program.basepath, "User", "Cache");
 
             //CoreWebView2Environment cwv2Environment = await CoreWebView2Environment.CreateAsync(browseExe, Path.Combine(Program.basepath, "Data"), new CoreWebView2EnvironmentOptions("--autoplay-    policy=no-user-gesture-required"));
@@ -148,6 +148,7 @@ namespace WebBrowserWidget
             DateTime currentDateTime = DateTime.Now;
             string formattedDateTime = currentDateTime.ToString("dd MMMM yyyy HH:mm");
 
+            manager.SavePeriodically();
             Db_manager.AddColumnsAndRows(H_path, (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
         }
 
@@ -203,6 +204,8 @@ namespace WebBrowserWidget
                 {
                     MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
                 };
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             };
         }
 

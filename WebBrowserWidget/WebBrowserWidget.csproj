@@ -15,7 +15,7 @@
     <ApplicationIcon>Assets\ico\rodentia-icons_preferences-system-windows.ico</ApplicationIcon>
     <Authors>Caio Silva</Authors>
     <Company>Suundumused</Company>
-    <Title>Browser Widget</Title>
+    <Title>Web Widget</Title>
     <Copyright>Personal use only</Copyright>
     <PackageProjectUrl>https://github.com/Suundumused/Web-Browser-Widget</PackageProjectUrl>
     <PackageIcon>large128x.png</PackageIcon>
@@ -25,6 +25,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageLicenseFile>LICENSE.rst</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <StartupObject>WebBrowserWidget.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -63,7 +64,7 @@
 
   <ItemGroup>
     <None Update="Assets\ico\16x.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Assets\ico\large128x.png">
       <Pack>True</Pack>

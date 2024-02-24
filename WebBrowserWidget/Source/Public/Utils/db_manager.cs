@@ -4,11 +4,11 @@
     {
         private static (string, string) Keys { get; set; } = ("", "");
 
-        public static void AddColumnsAndRows(string inputFile, (string, string) t1, (string, string) keys)
+        public static bool AddColumnsAndRows(string inputFile, (string, string) t1, (string, string) keys)
         {
             Keys = keys;
             string[] newRowData = { t1.Item1, t1.Item2 };
-            AddRowToCsv(inputFile, newRowData);
+            return AddRowToCsv(inputFile, newRowData);
         }
 
         private static bool IsLastDuplicate(string filePath, string[] rowData) 
@@ -67,7 +67,7 @@
             };
         }
 
-        private static void AddRowToCsv(string filePath, string[] rowData)
+        private static bool AddRowToCsv(string filePath, string[] rowData)
         {
             try
             {
@@ -81,12 +81,18 @@
                     using (StreamWriter streamWriter = File.AppendText(filePath))
                     {
                         streamWriter.WriteLine(string.Join(",", rowData));
-                    }
+                    };
+                    return true;
+                }
+                else 
+                {
+                    return false;
                 };
             }
             catch(Exception ex) 
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+                return false;
             };
         }
 

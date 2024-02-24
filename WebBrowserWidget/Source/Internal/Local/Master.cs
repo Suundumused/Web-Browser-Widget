@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
 using WebBrowserWidget.Source.Internal.Master;
 using WebBrowserWidget.Source.Public.Utils;
@@ -18,6 +17,9 @@ namespace WebBrowserWidget.Source.Internal.Local
         private ToolStripMenuItem ?AutoBoot;
         private ToolStripMenuItem ?Objects;
 
+        private int MaxBSave { get;} = 1;
+        private int MaxBSaveCount { get; set; } = 0;
+
         public List<dynamic> Instances { get; set; } = [];
 
         public void Init() 
@@ -30,21 +32,34 @@ namespace WebBrowserWidget.Source.Internal.Local
 
             try
             {
-                if (base_path != null && base_path != "")
+                /*if (base_path != null && base_path != "")
                 {
                     Ico_path = Path.Combine(base_path, "Assets", "ico", "16x.ico");
                 }
                 else
                 {
                     Ico_path = Path.Combine(AppContext.BaseDirectory, "Assets", "ico", "16x.ico");
-                }
-                SpawnTray(Ico_path);
+                }*/
+                SpawnTray();
             }
             catch (Exception ex) 
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Error);
                 System.Environment.Exit(1);
+            };
+        }
+
+        public void SavePeriodically() 
+        {
+            if (MaxBSaveCount < MaxBSave) 
+            {
+                MaxBSaveCount++;
             }
+            else 
+            {
+                Customize_Class.Save_Customs(Instances);
+                MaxBSaveCount = 0;
+            };
         }
 
         private void CurrentDomain_ProcessExit(object? sender, EventArgs e)
@@ -57,12 +72,12 @@ namespace WebBrowserWidget.Source.Internal.Local
             Customize_Class.Save_Customs(Instances);
         }
 
-        private void SpawnTray(string ico_path) 
+        private void SpawnTray() 
         {
             Icon_x = new NotifyIcon();
             try
             {
-                Icon_x.Icon = new Icon(ico_path);
+                Icon_x.Icon = Properties.Resources._16x;
             }
             catch (Exception ex)
             {

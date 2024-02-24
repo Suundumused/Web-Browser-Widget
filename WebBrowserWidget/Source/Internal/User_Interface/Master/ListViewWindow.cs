@@ -7,12 +7,12 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master
 {
     public partial class ListViewWindow : Form
     {
-        private dynamic myParent { get; set; }
+        public dynamic myParent { get; set; }
 
         private List<string> MineContent { get; set; }
         public List<UserClick> AllButtons { get; set; } = [];
 
-        private string MineEventType { get; set; }
+        public string MineEventType { get; set; }
 
         private Thread SpawnerItens { get; set; }
         public string minePath { get; } = "";
@@ -63,6 +63,19 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master
                     i++;
                 };
 
+                if (this.Text == "Favorites") 
+                {
+                    instance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { 
+                                try{
+                                    AddToListBTN btnadd = new AddToListBTN(this, myParent);
+                                    this.Controls.Add(btnadd);
+                                    btnadd.Dock = DockStyle.Bottom;
+                                }catch{}
+                            }
+                        )
+                    );
+                };
+
                 instance.Invoke(new System.Windows.Forms.MethodInvoker(delegate
                         {
                             instance.panel1.AutoScroll = true;
@@ -70,7 +83,33 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master
                     )
                 );
             }
-            catch (ThreadInterruptedException) { }
+            catch { }
+        }
+        public void AddPersonalBTN() 
+        {
+            dynamic my_browser = myParent.webView21;
+            string URL = my_browser.Source.ToString();
+            string documentTitle = "";
+
+            try
+            {
+                if (URL.Contains("www."))
+                {
+                    documentTitle = URL.Split("www.")[1].Split(".")[0];
+                }
+                else
+                {
+                    documentTitle = URL.Split("://")[1].Split(".")[0];
+                }
+            }
+            catch
+            {
+                documentTitle = "Loading...";
+            }
+
+            UserClick new_button = new UserClick(myParent, this, $"{documentTitle},{my_browser.Source}", MineEventType);
+            panel1.Controls.Add(new_button);
+            AllButtons.Add(new_button);
         }
 
         private void OnClose(object sender, FormClosingEventArgs e)

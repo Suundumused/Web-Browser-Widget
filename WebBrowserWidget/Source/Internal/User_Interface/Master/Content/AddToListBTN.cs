@@ -17,25 +17,15 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master.Content
         {
             try 
             {
-                dynamic my_browser = MyInstance.webView21;
-                string URL = my_browser.Source.ToString();
                 string documentTitle = "";
 
-                try
-                {
-                    if (URL.Contains("www."))
-                    {
-                        documentTitle = URL.Split("www.")[1].Split(".")[0];
-                    }
-                    else
-                    {
-                        documentTitle = URL.Split("://")[1].Split(".")[0];
-                    }
-                }
-                catch
+                MyInstance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { documentTitle = MyInstance.webView21.CoreWebView2.DocumentTitle; }));
+
+                if (documentTitle == " " || documentTitle == "")
                 {
                     documentTitle = "Loading...";
-                }
+                };
+
                 if (Db_manager.AddColumnsAndRows(MyParent.minePath, (documentTitle, MyInstance.webView21.Source.ToString()), ("Title", "Url"))) 
                 {
                     MyParent.AddPersonalBTN();

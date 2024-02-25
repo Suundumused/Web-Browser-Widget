@@ -7,18 +7,6 @@ namespace WebBrowserWidget.Source.Internal.Customize
 {
     internal class Customize_Class : iCustomsClass
     {
-        private static bool WinState(FormWindowState value)
-        {
-            if (value == FormWindowState.Maximized) 
-            {
-                return true;
-            }
-            else 
-            {
-                return false;
-            };
-        }
-
         public static string Customize(dynamic instance, string myDeferral, dynamic local_configs)
         {
             try

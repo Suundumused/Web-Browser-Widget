@@ -182,7 +182,7 @@
             Padding = new Padding(10);
             ShowIcon = false;
             ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "About";
             TopMost = true;
             tableLayoutPanel.ResumeLayout(false);

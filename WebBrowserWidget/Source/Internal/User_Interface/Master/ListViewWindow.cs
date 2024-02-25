@@ -96,24 +96,14 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master
         public void AddPersonalBTN() 
         {
             dynamic my_browser = myParent.webView21;
-            string URL = my_browser.Source.ToString();
             string documentTitle = "";
 
-            try
-            {
-                if (URL.Contains("www."))
-                {
-                    documentTitle = URL.Split("www.")[1].Split(".")[0];
-                }
-                else
-                {
-                    documentTitle = URL.Split("://")[1].Split(".")[0];
-                }
-            }
-            catch
+            myParent.Invoke(new System.Windows.Forms.MethodInvoker(delegate { documentTitle = myParent.webView21.CoreWebView2.DocumentTitle; }));
+
+            if (documentTitle == " " || documentTitle == "")
             {
                 documentTitle = "Loading...";
-            }
+            };
 
             UserClick new_button = new UserClick(myParent, this, $"{documentTitle},{my_browser.Source}", MineEventType);
             panel1.Controls.Add(new_button);

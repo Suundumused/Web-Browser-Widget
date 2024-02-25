@@ -60,9 +60,8 @@
                     return new List<string>();
                 };
 
-            }catch(Exception ex) 
+            }catch
             {
-                MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
                 return new List<string>();
             };
         }
@@ -89,9 +88,8 @@
                     return false;
                 };
             }
-            catch(Exception ex) 
+            catch
             {
-                MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
                 return false;
             };
         }

@@ -8,6 +8,7 @@ namespace WebBrowserWidget.Source.Internal.Local
     {
         public static JObject Properties = new JObject(
             new JProperty("AutoBoot", true),
+            new JProperty("DeleteData", false),
             new JProperty("Instances", new JObject(
                 new JProperty("Instance_0", new JObject(
                     new JProperty("URL", "https://www.google.com/"),

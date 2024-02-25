@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System.Reflection;
+﻿using System.Reflection;
 using WebBrowserWidget.Source.Internal.Customize;
 using WebBrowserWidget.Source.Internal.Master;
 using WebBrowserWidget.Source.Internal.User_Interface.About;
@@ -15,6 +14,7 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         private string Ico_path { get; set; } = "";
         private string H_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
+        private string F_path { get; } = Path.Combine(Program.basepath, "User", "favorites.csv");
 
         public string? Base_path { get; set; } = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -30,6 +30,8 @@ namespace WebBrowserWidget.Source.Internal.Local
 
         public void Init() 
         {
+            DeleteDataTask();
+
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
             Instances = new List<dynamic>();
@@ -113,6 +115,10 @@ namespace WebBrowserWidget.Source.Internal.Local
             Clear.Click += Clear_Historic;
             menuItem1.DropDownItems.Add(Clear);
 
+            ToolStripMenuItem ClearData = new ToolStripMenuItem("Clear User Data");
+            ClearData.Click += Clear_User_Data;
+            menuItem1.DropDownItems.Add(ClearData);
+
             ToolStripMenuItem setsclear = new ToolStripMenuItem("Clear settings");
             setsclear.Click += Clear_Settings;
             menuItem1.DropDownItems.Add(setsclear);
@@ -140,6 +146,48 @@ namespace WebBrowserWidget.Source.Internal.Local
             }
 
             Application.Run();
+        }
+
+        protected void DeleteDataTask() 
+        {
+            dynamic? data = AppSettings.ReadSettings();
+            string dataPath = Path.Combine(Program.basepath, "Data", "EBWebView");
+
+            try
+            {
+                if ((bool)data["DeleteData"]) 
+                {
+                    if (Path.Exists(dataPath))
+                    {
+                        Directory.Delete(dataPath, true);
+                    };
+                    data["DeleteData"] = false;
+                    AppSettings.WriteSettings(data);
+                };
+            }
+            catch (Exception ex)
+            {
+                MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+            };
+        }
+
+        private void Clear_User_Data(object? sender, EventArgs e)
+        {
+            dynamic? data = AppSettings.ReadSettings();
+
+            if (!(bool)data["DeleteData"])
+            {
+                try
+                {
+                    data["DeleteData"] = true;
+                    AppSettings.WriteSettings(data);
+                    MsgClass.Init("Restart to apply settings.", MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MsgClass.Init(ex.Message, MessageBoxIcon.Error);
+                };
+            };
         }
 
         private void AboutThisMe(object? sender, EventArgs e)
@@ -175,9 +223,12 @@ namespace WebBrowserWidget.Source.Internal.Local
                 if (File.Exists(H_path))
                 {
                     File.Delete(H_path);
-                }
+                };
             }
-            catch {}
+            catch (Exception es) 
+            {
+                MsgClass.Init(es.Message, MessageBoxIcon.Warning);
+            };
         }
 
         private void Clear_Settings(object? sender, EventArgs e)
@@ -188,9 +239,12 @@ namespace WebBrowserWidget.Source.Internal.Local
                 if (File.Exists(h_path))
                 {
                     File.Delete(h_path);
-                }
+                };
             }
-            catch { }
+            catch (Exception ex) 
+            {
+                MsgClass.Init(ex.Message, MessageBoxIcon.Warning);
+            };
         }
 
         private void List_Instances(object? sender, EventArgs e)
@@ -212,25 +266,24 @@ namespace WebBrowserWidget.Source.Internal.Local
                 {
                     try
                     {
-                        dynamic my_browser = object_.webView21;
-                        string URL = my_browser.Source.ToString();
                         string documentTitle = "";
 
-                        try
-                        {
-                            if (URL.Contains("www."))
-                            {
-                                documentTitle = URL.Split("www.")[1].Split(".")[0];
-                            }
-                            else
-                            {
-                                documentTitle = URL.Split("://")[1].Split(".")[0];
-                            };
-                        }
-                        catch
+                        object_.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                                {
+                                    try 
+                                    {
+                                        documentTitle = object_.webView21.CoreWebView2.DocumentTitle;
+                                    }
+                                    catch { documentTitle = "Loading..."; };
+                                }
+                            )
+                        );
+
+                        if (documentTitle == " " || documentTitle == "") 
                         {
                             documentTitle = "Loading...";
                         };
+
                         ToolStripMenuItem Item = new ToolStripMenuItem(documentTitle);
                         Item.Click += (object? sender, EventArgs e) => browser_focus(sender, e, object_);
                         Objects.DropDownItems.Add(Item);

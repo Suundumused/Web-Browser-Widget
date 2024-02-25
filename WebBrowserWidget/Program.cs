@@ -1,6 +1,5 @@
 using Microsoft.Win32;
 using System.Diagnostics;
-using System.Xml.Linq;
 using WebBrowserWidget.Source.Internal.Local;
 using WebBrowserWidget.Source.Public.Utils;
 
@@ -28,7 +27,6 @@ namespace WebBrowserWidget
             try
             {
                 Directory.CreateDirectory(Path.Combine(basepath, "Settings"));
-                Directory.CreateDirectory(Path.Combine(basepath, "Browser Properties"));
                 Directory.CreateDirectory(Path.Combine(basepath, "User", "Cache"));
                 Directory.CreateDirectory(Path.Combine(basepath, "Data"));
 

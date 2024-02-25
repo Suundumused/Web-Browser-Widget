@@ -18,6 +18,7 @@ namespace WebBrowserWidget
         public ListViewWindow? MineFavorites { get; set; } = null;
         public Local_Settings? MineSettings { get; set; } = null;
 
+        protected bool FirstTime { get; set; } = true;
         protected Point mouseLocation;
 
         public string? MyDeferral { get; set; } = null;
@@ -153,7 +154,15 @@ namespace WebBrowserWidget
             string formattedDateTime = currentDateTime.ToString("dd MMMM yyyy HH:mm");
 
             manager.SavePeriodically();
-            Db_manager.AddColumnsAndRows(H_path, (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
+
+            if (FirstTime)
+            {
+                FirstTime = false;
+            }
+            else 
+            {
+                Db_manager.AddColumnsAndRows(H_path, (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
+            };
         }
 
         private void Maximize_Window(object sender, MouseEventArgs e)

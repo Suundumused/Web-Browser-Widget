@@ -1,4 +1,5 @@
-﻿using WebBrowserWidget.Source.Public.Utils;
+﻿using System.Runtime.InteropServices;
+using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget.Source.Internal.User_Interface.Master.Content
 {

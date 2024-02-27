@@ -107,7 +107,7 @@ namespace WebBrowserWidget.Source.Internal.Local
             //menuItem1.Click += MenuItem1_Click;
             contextMenu.Items.Add(menuItem1);
 
-            AutoBoot = new ToolStripMenuItem("AutoBoot");
+            AutoBoot = new ToolStripMenuItem("Auto Boot");
             AutoBoot.Click += setAutoBoot;
             menuItem1.DropDownItems.Add(AutoBoot);
 

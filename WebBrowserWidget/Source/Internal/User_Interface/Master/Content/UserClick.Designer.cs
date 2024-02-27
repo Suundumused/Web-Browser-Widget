@@ -78,15 +78,14 @@
             // 
             // panel1
             // 
-            panel1.AutoScroll = true;
             panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(0);
-            panel1.MinimumSize = new Size(400, 48);
+            panel1.MinimumSize = new Size(400, 36);
             panel1.Name = "panel1";
-            panel1.Size = new Size(557, 48);
+            panel1.Size = new Size(557, 36);
             panel1.TabIndex = 7;
             // 
             // UserClick
@@ -99,10 +98,10 @@
             Controls.Add(button1);
             Controls.Add(panel1);
             Margin = new Padding(0);
-            MaximumSize = new Size(0, 42);
-            MinimumSize = new Size(400, 48);
+            MaximumSize = new Size(0, 36);
+            MinimumSize = new Size(400, 36);
             Name = "UserClick";
-            Size = new Size(557, 48);
+            Size = new Size(557, 36);
             Load += OnLoaded;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

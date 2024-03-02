@@ -196,13 +196,13 @@ namespace WebBrowserWidget.Source.Internal.Local
             {
                 if (AboutOfMe.IsDisposed) 
                 {
-                    AboutOfMe = new AboutMe();
+                    AboutOfMe = new AboutMe(this);
                     AboutOfMe.Show();
                 };
             }
             else 
             {
-                AboutOfMe = new AboutMe();
+                AboutOfMe = new AboutMe(this);
                 AboutOfMe.Show();
             };
         }

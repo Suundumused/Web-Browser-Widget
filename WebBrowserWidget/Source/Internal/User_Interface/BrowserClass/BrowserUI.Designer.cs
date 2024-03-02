@@ -257,8 +257,7 @@
             // 
             // BrowserUI
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
-            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.Black;
             ClientSize = new Size(1091, 607);
             Controls.Add(panel1);

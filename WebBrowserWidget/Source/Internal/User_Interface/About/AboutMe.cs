@@ -1,11 +1,16 @@
 ﻿using System.Reflection;
+using WebBrowserWidget.Source.Internal.Local;
+using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget.Source.Internal.User_Interface.About
 {
     partial class AboutMe : Form
     {
-        public AboutMe()
+        protected Local.Master Manager { get; set; }
+
+        public AboutMe(Local.Master master)
         {
+            Manager = master;
             InitializeComponent();
             //this.Text = String.Format("About {0}", AssemblyTitle);
             //this.labelProductName.Text = AssemblyProduct;
@@ -97,7 +102,7 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.About
 
         private void labelProductName_Click(object sender, EventArgs e)
         {
-
+            SpawnActor.CreateInstance(Manager, Deferral: "https://github.com/Suundumused");
         }
 
         private void Clicked(object sender, MouseEventArgs e)
@@ -105,9 +110,9 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.About
             this.Close();
         }
 
-        private void tableLayoutPanel_Paint(object sender, PaintEventArgs e)
+        private void Logo_Clicked(object sender, MouseEventArgs e)
         {
-
+            SpawnActor.CreateInstance(Manager, Deferral: "https://github.com/Suundumused");
         }
     }
 }

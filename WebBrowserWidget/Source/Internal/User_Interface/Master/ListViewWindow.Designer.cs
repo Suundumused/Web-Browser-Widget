@@ -62,8 +62,7 @@
             // 
             // ListViewWindow
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
-            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.MediumTurquoise;
             ClientSize = new Size(584, 450);
             Controls.Add(panel1);

@@ -74,8 +74,8 @@ namespace WebBrowserWidget
             string browseExe = Path.Combine(base_path, "Runtime", "_version");
             string cacheFolder = Path.Combine(Program.basepath, "User", "Cache");
 
-            //CoreWebView2Environment cwv2Environment = await CoreWebView2Environment.CreateAsync(browseExe, Path.Combine(Program.basepath, "Data"), new CoreWebView2EnvironmentOptions("--autoplay-    policy=no-user-gesture-required"));
-            CoreWebView2Environment cwv2Environment = await CoreWebView2Environment.CreateAsync(null, Path.Combine(Program.basepath, "Data"), new CoreWebView2EnvironmentOptions("--autoplay-    policy=no-user-gesture-required"));
+            CoreWebView2Environment cwv2Environment = await CoreWebView2Environment.CreateAsync(browseExe, Path.Combine(Program.basepath, "Data"), new CoreWebView2EnvironmentOptions("--autoplay-    policy=no-user-gesture-required"));
+            //CoreWebView2Environment cwv2Environment = await CoreWebView2Environment.CreateAsync(null, Path.Combine(Program.basepath, "Data"), new CoreWebView2EnvironmentOptions("--autoplay-    policy=no-user-gesture-required"));
             await webView21.EnsureCoreWebView2Async(cwv2Environment);
         }
 

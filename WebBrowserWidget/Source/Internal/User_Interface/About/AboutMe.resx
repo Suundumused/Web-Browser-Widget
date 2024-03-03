@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema 
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>An ultra-light Internet Browser with multiple pop ups.
+
+Terms and Conditions
+---------------------
+
+1. **Definitions**
+
+   1.1. "This License" refers to version 3.0 of the GNU General Public License.
+
+   1.2. "Copyright" refers to the legal right to copy, distribute, and/or modify a
+   particular work.
+
+   1.3. "Source Code" refers to the preferred form of the work for making
+   modifications.
+
+   1.4. "Object Code" refers to any non-Source Code representation of a work.
+
+2. **Basic Permissions**
+
+   All rights granted under this License are granted for the term of copyright on the
+   Program, and are irrevocable provided the stated conditions are met. This License
+   explicitly affirms your unlimited permission to run the unmodified Program.
+
+3. **Copyleft Conditions**
+
+   3.1. You may copy, modify, and distribute the Program, or any work based on it,
+   under the terms of this License, provided that you give prominent notice with each
+   copy that you modified the Program.
+
+   3.2. If you distribute copies of the Program, or any work based on it, you must
+   give the recipients all the rights that you have. You must make sure that they,
+   too, receive or can get the Source Code.
+
+4. **Acceptance**
+
+   By copying, modifying, or distributing the Program (or any work based on the
+   Program), you indicate your acceptance of this License to do so, and all its terms
+   and conditions for copying, distributing or modifying the Program or works based
+   on it.
+
+Disclaimer of Warranty
+------------------------
+
+THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.
+EXCEPT WHEN OTHERWISE STATED IN WRITING, THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
+IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS FOR A PARTICULAR PURPOSE. THE ENTIRE RISK AS TO THE QUALITY AND
+PERFORMANCE OF THE PROGRAM IS WITH YOU.</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAH9/fwJVVVUYSkNDJkJCPTI9PTk/Pjo3Rj06Nks9OjZLPjo3Rj09OT9CQj0ySkNDJlVV
+        VRh/f38CAAAAAFhiYhqmq6noxsrI+cbKyPnFycf6xcnI+sTIx/vEyMf7xMfG+8PHxvvEyMf6w8jF+sTJ
+        xvnDyMb5pKmn6FhiYhpdY2BY3ODe/+Hl5P/h5eT/4eXk/+Hl5P/h5eT/4eXj/+Dl4//g5OP/3+Ti/9/j
+        4v/e4+H/3eLg/9jd2/9dY2BYXmNeWt3h4P/j5+X/4+fl/+Pn5f/j5+X/4ubl/+Lm5f/i5uT/4eXk/+Hl
+        4//g5OP/3+Ti/97j4f/a3tz/XmNeWl5jXlrg4+P/5ejn/+Xo5//l6Of/5Ojn/+To5//k5+b/4+fm/+Lm
+        5f/i5uT/4eXk/+Dl4//f5OL/2t/d/15jXlpeY15a4uTk/+bq6f/n6un/5urp/+bp6f/m6ej/5ejo/+To
+        5//k5+b/4+fl/+Lm5P/h5eT/4OTj/9zg3/9eY15aXmNeWuTm5v/o6+v/6Ovr/+jr6v/o6+r/5+rp/+bp
+        6P/l6ej/5Ojn/+Pn5v/i5uX/4ebk/+Dl4//c4d//XmNeWl5jXlrm6Oj/6u3s/+rs7P/p7Oz/6evr/+jr
+        6v/n6un/5uno/+Xo5//k5+b/4ubl/+Hm5P/g5eP/3eLg/15jXlpeY15a5+np/+zu7v/r7e3/6uzs/+nr
+        6//o6+r/5+rp/+bp6P/k6Of/4+fm/+Lm5f/h5eT/4OXj/97i4P9eY15aXmNeWtzf3//d39//3d/f/9ze
+        3v/b3t3/2t3c/9nc2//Y29r/2NvZ/9fa2P/W2dj/1djX/9TY1v/U2Nf/XmNeWmBjYFqjp6X/kZaU/42S
+        kP+MkY//jJGP/4yRj/+MkY//kZaU/5qdm/+UmJf/l5uZ/5aZmP+Wmpj/nKCe/2BjYFpjZmNatrq6/6uv
+        rv+prq3/pqup/6Kopv+fpKP/nKKg/4OGgv86ODL/cHFs/0RCPf9jYl7/WFdS/6arqv9jZmNaZmlmVcLF
+        xP+4vbz/t7y7/7a7uv+1urn/tLm4/7O4tv+tsrD/lZiV/6arqf+VmZb/m6Cd/5eamP+1ubf/ZmlmVWJi
+        Yg2jqKXEtri32LW3tti0uLfXs7e117O3tdeytbTXsrW01rK0s9awtLPWr7Oy1q+ysdWvsrHVnKGfwVVV
+        VQwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAA//8AAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAA//8AAA==
+</value>
+  </data>
+</root>

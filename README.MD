@@ -33,7 +33,7 @@ A swift and responsive browsing experience without compromising your system's pe
 
 ## Installation
 
-1. Download the latest release of UltraWeb Widget [here](https://github.com/Suundumused/Web-Browser-Widget/releases).
+1. Download the latest release of Web Widget [here](https://github.com/Suundumused/Web-Browser-Widget/releases).
 2. Extract or run Setup to your preferred location.
 3. Run the executable file to launch Web Widget.
 

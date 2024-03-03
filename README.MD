@@ -8,9 +8,11 @@ Web Widget is an Chromium-based web browser desktop widget that redefines the br
 
 ### 🌟 Transparency
 Achieve a stunning aesthetic by customizing the transparency of your Widget.
+![](https://raw.githubusercontent.com/Suundumused/Web-Browser-Widget/main/README_ASSETS/Captura%20de%20tela%202024-03-02%20162926.png)
 
 ### 🎨 Change Top Bar Color
 Personalize the top bar color of the widget. Choose from a spectrum of colors to match your mood, desktop theme, or simply to create a vibrant and dynamic look.
+![](https://raw.githubusercontent.com/Suundumused/Web-Browser-Widget/main/README_ASSETS/Captura%20de%20tela%202024-03-02%20164156.png)
 
 ### 🚀 Chromium-Based
 Built on the robust Chromium engine, Web Widget inherits the speed and reliability of one of the world's most advanced browsers "Edge".
@@ -21,9 +23,11 @@ Boost productivity by running multiple instances of Web Widget concurrently. Eff
 ### 🌐 Standard Features
 - **Favorites:** Easily bookmark your favorite websites for quick access.
 - **History:** Access a detailed history of your browsing activities.
+![](https://raw.githubusercontent.com/Suundumused/Web-Browser-Widget/main/README_ASSETS/Captura%20de%20tela%202024-03-02%20164532.png)
 
 ### 🚀 Start with System
 Web Widget is configured to launch automatically with your system.
+![](https://raw.githubusercontent.com/Suundumused/Web-Browser-Widget/main/README_ASSETS/Captura%20de%20tela%202024-03-02%20164934.png)
 
 ### 🔄 Restore Settings and Sessions
 Enjoy continuity across sessions with Web Widget's intelligent session management. Your preferences, tabs, and session data are seamlessly restored every time you launch the application.

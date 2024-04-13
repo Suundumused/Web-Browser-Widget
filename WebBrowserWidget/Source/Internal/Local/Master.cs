@@ -10,14 +10,15 @@ namespace WebBrowserWidget.Source.Internal.Local
     internal class Master
     {
         private NotifyIcon? Icon_x;
-
         private AboutMe ?AboutOfMe { get; set; } = null;
 
-        private string Ico_path { get; set; } = "";
-        private string H_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
-        private string F_path { get; } = Path.Combine(Program.basepath, "User", "favorites.csv");
-
-        public string? Base_path { get; set; } = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        private string Ico_path { get; } = "";
+        public static string H_path { get; } = System.IO.Path.Combine(Program.basepath, "User", "historic.csv");
+        public static string F_path { get; } = System.IO.Path.Combine(Program.basepath, "User", "favorites.csv");
+        private string Path { get; } = System.IO.Path.Combine(Program.basepath, "Settings", "User_Settings.json");
+        private string DataPath { get; } = System.IO.Path.Combine(Program.basepath, "Data", "EBWebView");
+        public string? Base_path { get; set; } = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public static string ExecutablePath { get; } = Application.ExecutablePath.ToString();
 
         public bool OnFavorites { get; set; } = false;
 
@@ -32,7 +33,6 @@ namespace WebBrowserWidget.Source.Internal.Local
         public void Init() 
         {
             DeleteDataTask();
-
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(CurrentDomain_ProcessExit);
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
             Instances = new List<dynamic>();
@@ -103,9 +103,7 @@ namespace WebBrowserWidget.Source.Internal.Local
             Objects = new ToolStripMenuItem("Instances");
             contextMenu.Items.Add(Objects);
 
-            // Add menu items to the context menu
             ToolStripMenuItem menuItem1 = new ToolStripMenuItem("Settings");
-            //menuItem1.Click += MenuItem1_Click;
             contextMenu.Items.Add(menuItem1);
 
             AutoBoot = new ToolStripMenuItem("Auto Boot");
@@ -132,7 +130,6 @@ namespace WebBrowserWidget.Source.Internal.Local
             menuItem2.Click += Exit;
             contextMenu.Items.Add(menuItem2);
 
-            // Assign the context menu to the NotifyIcon
             Icon_x.ContextMenuStrip = contextMenu;
 
             JObject? data = AppSettings.ReadSettings();
@@ -144,23 +141,20 @@ namespace WebBrowserWidget.Source.Internal.Local
             else
             {
                 AutoBoot.CheckState = CheckState.Unchecked;
-            }
-
+            };
             Application.Run();
         }
 
         protected void DeleteDataTask() 
         {
             JObject? data = AppSettings.ReadSettings();
-            string dataPath = Path.Combine(Program.basepath, "Data", "EBWebView");
-
             try
             {
                 if ((bool)data["DeleteData"]) 
                 {
-                    if (Path.Exists(dataPath))
+                    if (System.IO.Path.Exists(DataPath))
                     {
-                        Directory.Delete(dataPath, true);
+                        Directory.Delete(DataPath, true);
                     };
                     data["DeleteData"] = false;
                     AppSettings.WriteSettings(data);
@@ -236,10 +230,9 @@ namespace WebBrowserWidget.Source.Internal.Local
         {
             try
             {
-                string h_path = Path.Combine(Program.basepath, "Settings", "User_Settings.json");
-                if (File.Exists(h_path))
+                if (File.Exists(Path))
                 {
-                    File.Delete(h_path);
+                    File.Delete(Path);
                 };
             }
             catch (Exception ex) 
@@ -251,7 +244,6 @@ namespace WebBrowserWidget.Source.Internal.Local
         private void List_Instances(object? sender, EventArgs e)
         {
             Objects.DropDownItems.Clear();
-
             int i = 0;
             foreach (BrowserUI ?object_ in Instances)
             {
@@ -279,17 +271,15 @@ namespace WebBrowserWidget.Source.Internal.Local
                                 }
                             )
                         );
-
                         if (documentTitle == " " || documentTitle == "") 
                         {
                             documentTitle = "Loading...";
                         };
-
                         ToolStripMenuItem Item = new ToolStripMenuItem(documentTitle);
                         Item.Click += (object? sender, EventArgs e) => browser_focus(sender, e, object_);
                         Objects.DropDownItems.Add(Item);
                     }
-                    catch { }
+                    catch { };
                 };
                 i++;
             };
@@ -331,7 +321,7 @@ namespace WebBrowserWidget.Source.Internal.Local
             {
                 try
                 {
-                    Program.RegStart.SetValue("Web_Widget", Application.ExecutablePath.ToString());
+                    Program.RegStart.SetValue("Web_Widget", ExecutablePath);
                     data["AutoBoot"] = true;
                     AutoBoot.CheckState = CheckState.Checked;
                 }

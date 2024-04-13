@@ -12,7 +12,7 @@
             else 
             {
                 SpawnMSG(text, type);
-            }
+            };
         }
 
         public static void SpawnMSG(string text, MessageBoxIcon type) 

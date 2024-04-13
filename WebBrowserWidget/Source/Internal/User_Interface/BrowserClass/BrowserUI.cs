@@ -70,7 +70,6 @@ namespace WebBrowserWidget
             {
                 base_path = AppContext.BaseDirectory;
             }
-
             string browseExe = Path.Combine(base_path, "Runtime", "_version");
             string cacheFolder = Path.Combine(Program.basepath, "User", "Cache");
 
@@ -154,7 +153,6 @@ namespace WebBrowserWidget
             string formattedDateTime = currentDateTime.ToString("dd MMMM yyyy HH:mm");
 
             manager.SavePeriodically();
-
             if (FirstTime)
             {
                 FirstTime = false;

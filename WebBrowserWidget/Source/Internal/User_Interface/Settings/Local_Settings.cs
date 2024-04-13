@@ -31,7 +31,7 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Settings
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 myParent.panel2.BackColor = colorDialog1.Color;
-            }
+            };
         }
 
         private void UpdateUI()

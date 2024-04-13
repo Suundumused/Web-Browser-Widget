@@ -59,14 +59,12 @@ namespace WebBrowserWidget.Source.Internal.Customize
                         );
                     };     
                 };
-
                 JObject? mineinstances = data["Instances"] as JObject;
                 List<JProperty>? propertiesToDelete = mineinstances.Properties().Where(p => p.Name.StartsWith("Instance_")).ToList();
                 foreach (JProperty property in propertiesToDelete)
                 {
                     property.Remove();
-                }
-
+                };
                 int i = 0;
                 foreach (JObject dict in dicts_list) 
                 {

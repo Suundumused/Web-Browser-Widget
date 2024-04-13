@@ -27,13 +27,12 @@ namespace WebBrowserWidget.Source.Internal.Local
             try
             {
                 return File.Exists(file_path);
-
             }
             catch (Exception e)
             {
                 MsgClass.Init(e.Message, MessageBoxIcon.Error);
                 return false;
-            }
+            };
         }
 
         public static JObject ReadSettings()
@@ -46,15 +45,15 @@ namespace WebBrowserWidget.Source.Internal.Local
                 }
                 else
                 {
-                    Program.RegStart.SetValue("Web_Widget", Application.ExecutablePath.ToString());
+                    Program.RegStart.SetValue("Web_Widget", Master.ExecutablePath);
                     return Properties;
-                }
+                };
             }
             catch (Exception ex)
             {
                 MsgClass.Init(ex.Message, MessageBoxIcon.Error);
                 return Properties;
-            }
+            };
         }
 
         public static void WriteSettings(JObject data)

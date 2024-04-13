@@ -15,7 +15,7 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master.Content
         {
             MineParent = parent;
             MineInstance = Instance;
-            Mine_var = variable.Replace(",", " - ");
+            Mine_var = variable.Replace(",", " -> ");
             Mine_event_type = event_type;
             InitializeComponent();
             label1.Text = Mine_var;
@@ -27,15 +27,15 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master.Content
             {
                 try
                 {
-                    MineInstance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { MineInstance.webView21.CoreWebView2.Navigate(Mine_var.Split("- ")[1]); }));
+                    MineInstance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { MineInstance.webView21.CoreWebView2.Navigate(Mine_var.Split("-> ")[1]); }));
                     MineParent.Close();
                 }
                 catch
                 {
-                    SpawnActor.CreateInstance(MineInstance, Deferral: Mine_var.Split("- ")[1]);
+                    SpawnActor.CreateInstance(MineInstance, Deferral: Mine_var.Split("-> ")[1]);
                     MineParent.Close();
-                }
-            }
+                };
+            };
         }
 
         private void Hover_Color(object sender, EventArgs e)

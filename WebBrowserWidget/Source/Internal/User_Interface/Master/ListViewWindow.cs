@@ -25,11 +25,11 @@ namespace WebBrowserWidget.Source.Internal.User_Interface.Master
             this.Text = title;
             if (title == "Favorites") 
             {
-                minePath = Path.Combine(Program.basepath, "User", "favorites.csv");
+                minePath = Local.Master.F_path;
             }
             else 
             {
-                minePath = Path.Combine(Program.basepath, "User", "historic.csv");
+                minePath = Local.Master.H_path;
             }
             this.TopMost = true;
             InitializeComponent();

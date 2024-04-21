@@ -1,6 +1,6 @@
 ### Personal Use License version
 
-**This branch refers to the [release ](https://github.com/Suundumused/Web-Browser-Widget/releases/tag/Setup_Download)version.**
+**This branch refers to the [release ](https://github.com/Suundumused/Web-Browser-Widget/releases/tag/V1.0.2.0)version.**
 
 ## Overview
 

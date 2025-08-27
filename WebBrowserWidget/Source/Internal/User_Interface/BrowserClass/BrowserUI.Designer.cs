@@ -1,4 +1,4 @@
-﻿namespace WebBrowserWidget
+﻿namespace WebBrowserWidget.Source.Internal.User_Interface.BrowserClass
 {
     partial class BrowserUI
     {

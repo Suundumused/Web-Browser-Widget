@@ -1,125 +1,131 @@
-﻿using System;
-using System.Drawing.Drawing2D;
-using WebBrowserWidget.Source.Internal.User_Interface.Master.Content;
-using WebBrowserWidget.Source.Public.Utils;
+﻿using WebBrowserWidget.Source.Internal.User_Interface.Master.Content;
 
-namespace WebBrowserWidget.Source.Internal.User_Interface.Master
+namespace WebBrowserWidget.Source.Internal.User_Interface.Master;
+
+public partial class ListViewWindow : Form
 {
-    public partial class ListViewWindow : Form
+    public ListViewWindow(dynamic Instance, List<string> Content, string title = "", string event_type = "navigate")
     {
-        public dynamic myParent { get; set; }
+        myParent = Instance;
+        MineContent = Content;
+        MineEventType = event_type;
+        Text = title;
+        if (title == "Favorites")
+            minePath = Local.Master.F_path;
+        else
+            minePath = Local.Master.H_path;
+        TopMost = true;
+        InitializeComponent();
+        BringToFront();
+        Activate();
+    }
 
-        private List<string> MineContent { get; set; }
-        public List<UserClick> AllButtons { get; set; } = [];
+    public dynamic myParent { get; set; }
 
-        public string MineEventType { get; set; }
+    private List<string> MineContent { get; }
+    public List<UserClick> AllButtons { get; set; } = [];
 
-        private Thread SpawnerItens { get; set; }
-        public string minePath { get; } = "";
+    public string MineEventType { get; set; }
 
-        public ListViewWindow(dynamic Instance, List<string> Content, string title = "", string event_type = "navigate")
+    private Thread SpawnerItens { get; set; }
+    public string minePath { get; } = "";
+
+    private void UpdateUI(ListViewWindow instance)
+    {
+        try
         {
-            myParent = Instance;
-            MineContent = Content;
-            MineEventType = event_type;
-            this.Text = title;
-            if (title == "Favorites") 
+            AllButtons = new List<UserClick>();
+
+            long i = 0;
+            foreach (var thing in MineContent)
             {
-                minePath = Local.Master.F_path;
-            }
-            else 
-            {
-                minePath = Local.Master.H_path;
-            }
-            this.TopMost = true;
-            InitializeComponent();
-            BringToFront();
-            Activate();
-        }
-
-        private void UpdateUI(ListViewWindow instance)
-        {
-            try
-            {
-                AllButtons = new List<UserClick>();
-
-                long i = 0;
-                foreach (string thing in MineContent)
-                {
-                    instance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { 
-                                try{
-                                    UserClick new_button = new UserClick(instance.myParent, instance, thing, MineEventType);
-                                    instance.panel1.Controls.Add(new_button);
-                                    instance.AllButtons.Add(new_button);
-                                    if (i == 0) 
-                                    {
-                                        new_button.Visible = false;
-                                        new_button.Enabled = false;
-                                    }
-                                }catch{}
-                            }
-                        )
-                    );
-                    i++;
-                };
-
-                instance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { 
-                            try{
-                                instance.label1.Dispose();
-                            }catch{}
-                        }
-                    )
-                );
-
-                if (this.Text == "Favorites") 
-                {
-                    instance.Invoke(new System.Windows.Forms.MethodInvoker(delegate { 
-                                try{
-                                    AddToListBTN btnadd = new AddToListBTN(this, myParent);
-                                    this.Controls.Add(btnadd);
-                                    btnadd.Dock = DockStyle.Bottom;
-                                }catch{}
-                            }
-                        )
-                    );
-                };
-
-                instance.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                instance.Invoke(new MethodInvoker(delegate
                         {
-                            instance.panel1.AutoScroll = true;
+                            try
+                            {
+                                var new_button = new UserClick(instance.myParent, instance, thing, MineEventType);
+                                instance.panel1.Controls.Add(new_button);
+                                instance.AllButtons.Add(new_button);
+                                if (i == 0)
+                                {
+                                    new_button.Visible = false;
+                                    new_button.Enabled = false;
+                                }
+                            }
+                            catch
+                            {
+                            }
                         }
                     )
                 );
+                i++;
             }
-            catch { }
+
+            ;
+
+            instance.Invoke(new MethodInvoker(delegate
+                    {
+                        try
+                        {
+                            instance.label1.Dispose();
+                        }
+                        catch
+                        {
+                        }
+                    }
+                )
+            );
+
+            if (Text == "Favorites")
+                instance.Invoke(new MethodInvoker(delegate
+                        {
+                            try
+                            {
+                                var btnadd = new AddToListBTN(this, myParent);
+                                Controls.Add(btnadd);
+                                btnadd.Dock = DockStyle.Bottom;
+                            }
+                            catch
+                            {
+                            }
+                        }
+                    )
+                );
+            ;
+
+            instance.Invoke(new MethodInvoker(delegate { instance.panel1.AutoScroll = true; }
+                )
+            );
         }
-        public void AddPersonalBTN() 
+        catch
         {
-            dynamic my_browser = myParent.webView21;
-            string documentTitle = "";
-
-            myParent.Invoke(new System.Windows.Forms.MethodInvoker(delegate { documentTitle = myParent.webView21.CoreWebView2.DocumentTitle; }));
-
-            if (documentTitle == " " || documentTitle == "")
-            {
-                documentTitle = "Loading...";
-            };
-
-            UserClick new_button = new UserClick(myParent, this, $"{documentTitle},{my_browser.Source}", MineEventType);
-            panel1.Controls.Add(new_button);
-            AllButtons.Add(new_button);
         }
+    }
 
-        private void OnClose(object sender, FormClosingEventArgs e)
-        {
-            SpawnerItens.Interrupt();
-            myParent.OnFavorites = false;
-        }
+    public void AddPersonalBTN()
+    {
+        var my_browser = myParent.webView21;
+        var documentTitle = "";
 
-        private void OnLoaded(object sender, EventArgs e)
-        {
-            SpawnerItens = new Thread(() => UpdateUI(this));
-            SpawnerItens.Start();
-        }
+        myParent.Invoke(new MethodInvoker(delegate { documentTitle = myParent.webView21.CoreWebView2.DocumentTitle; }));
+
+        if (documentTitle == " " || documentTitle == "") documentTitle = "Loading...";
+        ;
+
+        var new_button = new UserClick(myParent, this, $"{documentTitle},{my_browser.Source}", MineEventType);
+        panel1.Controls.Add(new_button);
+        AllButtons.Add(new_button);
+    }
+
+    private void OnClose(object sender, FormClosingEventArgs e)
+    {
+        SpawnerItens.Interrupt();
+        myParent.OnFavorites = false;
+    }
+
+    private void OnLoaded(object sender, EventArgs e)
+    {
+        SpawnerItens = new Thread(() => UpdateUI(this));
+        SpawnerItens.Start();
     }
 }

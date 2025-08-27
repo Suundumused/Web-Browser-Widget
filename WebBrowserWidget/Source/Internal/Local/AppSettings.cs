@@ -2,80 +2,85 @@
 using Newtonsoft.Json.Linq;
 using WebBrowserWidget.Source.Public.Utils;
 
-namespace WebBrowserWidget.Source.Internal.Local
+namespace WebBrowserWidget.Source.Internal.Local;
+
+internal static class AppSettings
 {
-    internal static class AppSettings
-    {
-        public static JObject Properties = new JObject(
-            new JProperty("AutoBoot", true),
-            new JProperty("DeleteData", false),
-            new JProperty("Instances", new JObject(
-                new JProperty("Instance_0", new JObject(
-                    new JProperty("URL", "https://www.google.com/"),
-                    new JProperty("Sizes", new JArray(1107, 646)),
-                    new JProperty("Opacity", 0.9),
-                    new JProperty("BarColor", new JArray(255, 160, 122)),
-                    new JProperty("Position", new JArray(-1, -1))
-                ))
+    public static JObject Properties = new(
+        new JProperty("AutoBoot", true),
+        new JProperty("DeleteData", false),
+        new JProperty("Instances", new JObject(
+            new JProperty("Instance_0", new JObject(
+                new JProperty("URL", "https://www.google.com/"),
+                new JProperty("Sizes", new JArray(1107, 646)),
+                new JProperty("Opacity", 0.9),
+                new JProperty("BarColor", new JArray(255, 160, 122)),
+                new JProperty("Position", new JArray(-1, -1))
             ))
-        );
+        ))
+    );
 
-        public static string file_path = Path.Combine(Program.basepath, "Settings", "User_Settings.json");
+    public static string file_path = Path.Combine(Program.basepath, "Settings", "User_Settings.json");
 
-        public static bool UserSettingsExists()
+    public static bool UserSettingsExists()
+    {
+        try
         {
-            try
-            {
-                return File.Exists(file_path);
-            }
-            catch (Exception e)
-            {
-                MsgClass.Init(e.Message, MessageBoxIcon.Error);
-                return false;
-            };
+            return File.Exists(file_path);
+        }
+        catch (Exception e)
+        {
+            MsgClass.Init(e.Message, MessageBoxIcon.Error);
+            return false;
         }
 
-        public static JObject ReadSettings()
+        ;
+    }
+
+    public static JObject ReadSettings()
+    {
+        try
         {
-            try
-            {
-                if (UserSettingsExists())
+            if (UserSettingsExists()) return JObject.Parse(File.ReadAllText(file_path));
+
+            Program.RegStart.SetValue("Web_Widget", Master.ExecutablePath);
+            return Properties;
+            ;
+        }
+        catch (Exception ex)
+        {
+            MsgClass.Init(ex.Message, MessageBoxIcon.Error);
+            return Properties;
+        }
+
+        ;
+    }
+
+    public static void WriteSettings(JObject data)
+    {
+        try
+        {
+            if (!UserSettingsExists())
+                using (File.Create(file_path))
                 {
-                    return JObject.Parse(File.ReadAllText(file_path));
                 }
-                else
-                {
-                    Program.RegStart.SetValue("Web_Widget", Master.ExecutablePath);
-                    return Properties;
-                };
-            }
-            catch (Exception ex)
+
+            ;
+            using (var file = File.CreateText(file_path))
+            using (var writer = new JsonTextWriter(file))
             {
-                MsgClass.Init(ex.Message, MessageBoxIcon.Error);
-                return Properties;
-            };
+                writer.Formatting = Formatting.Indented;
+                data.WriteTo(writer);
+            }
+
+            ;
+        }
+        catch (Exception e)
+        {
+            MsgClass.Init(e.Message, MessageBoxIcon.Error);
         }
 
-        public static void WriteSettings(JObject data)
-        {
-            try
-            {
-                if (!UserSettingsExists())
-                {
-                    using (File.Create(file_path)) { }
-                };
-                using (StreamWriter file = File.CreateText(file_path))
-                using (JsonTextWriter writer = new JsonTextWriter(file))
-                {
-                    writer.Formatting = Formatting.Indented;
-                    data.WriteTo(writer);
-                };
-            }
-            catch (Exception e)
-            {
-                MsgClass.Init(e.Message, MessageBoxIcon.Error);
-            };
-            GC.Collect();
-        }
+        ;
+        GC.Collect();
     }
 }

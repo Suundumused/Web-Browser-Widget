@@ -34,6 +34,11 @@ internal partial class AboutMe : Form
         SpawnActor.CreateInstance(Manager, "https://example.com/");
     }
 
+    private void AboutMe_Load(object sender, EventArgs e)
+    {
+
+    }
+
     #region Assembly Attribute Accessors
 
     public string AssemblyTitle
@@ -59,8 +64,7 @@ internal partial class AboutMe : Form
         {
             var attributes = Assembly.GetExecutingAssembly()
                 .GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-            if (attributes.Length == 0) return "";
-            return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+            return attributes.Length == 0 ? "" : ((AssemblyDescriptionAttribute)attributes[0]).Description;
         }
     }
 
@@ -70,8 +74,7 @@ internal partial class AboutMe : Form
         {
             var attributes = Assembly.GetExecutingAssembly()
                 .GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-            if (attributes.Length == 0) return "";
-            return ((AssemblyProductAttribute)attributes[0]).Product;
+            return attributes.Length == 0 ? "" : ((AssemblyProductAttribute)attributes[0]).Product;
         }
     }
 
@@ -81,8 +84,7 @@ internal partial class AboutMe : Form
         {
             var attributes = Assembly.GetExecutingAssembly()
                 .GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-            if (attributes.Length == 0) return "";
-            return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+            return attributes.Length == 0 ? "" : ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
         }
     }
 
@@ -92,8 +94,7 @@ internal partial class AboutMe : Form
         {
             var attributes = Assembly.GetExecutingAssembly()
                 .GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-            if (attributes.Length == 0) return "";
-            return ((AssemblyCompanyAttribute)attributes[0]).Company;
+            return attributes.Length == 0 ? "" : ((AssemblyCompanyAttribute)attributes[0]).Company;
         }
     }
 

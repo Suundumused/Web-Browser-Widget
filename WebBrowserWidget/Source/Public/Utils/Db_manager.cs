@@ -15,7 +15,7 @@ public class Db_manager
     {
         try
         {
-            var lines = new List<string>(File.ReadAllLines(filePath));
+            List<string> lines = [.. File.ReadAllLines(filePath)];
             if (lines.Count() > 500)
             {
                 lines.RemoveAt(1);
@@ -39,7 +39,7 @@ public class Db_manager
     {
         try
         {
-            var lines = new List<string>(File.ReadAllLines(filePath));
+            List<string> lines = [.. File.ReadAllLines(filePath)];
 
             lines.RemoveAt(Convert.ToInt32(index));
             File.WriteAllLines(filePath, lines);
@@ -56,14 +56,12 @@ public class Db_manager
     {
         try
         {
-            if (File.Exists(filePath)) return new List<string>(File.ReadAllLines(filePath));
-
-            return new List<string>();
+            return File.Exists(filePath) ? [.. File.ReadAllLines(filePath)] : [];
             ;
         }
         catch
         {
-            return new List<string>();
+            return [];
         }
 
         ;
@@ -75,6 +73,7 @@ public class Db_manager
         {
             if (!File.Exists(filePath))
                 File.WriteAllText(filePath, string.Join(",", GetColumnNames()) + Environment.NewLine);
+
             ;
 
             if (!IsLastDuplicate(filePath, rowData))

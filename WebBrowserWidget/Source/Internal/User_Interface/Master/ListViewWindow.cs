@@ -10,11 +10,9 @@ public partial class ListViewWindow : Form
         MineContent = Content;
         MineEventType = event_type;
         Text = title;
-        if (title == "Favorites")
-            minePath = Local.Master.F_path;
-        else
-            minePath = Local.Master.H_path;
+        minePath = title == "Favorites" ? Local.Master.fPath : Local.Master.hPath;
         TopMost = true;
+
         InitializeComponent();
         BringToFront();
         Activate();
@@ -34,16 +32,16 @@ public partial class ListViewWindow : Form
     {
         try
         {
-            AllButtons = new List<UserClick>();
+            AllButtons = [];
 
             long i = 0;
             foreach (var thing in MineContent)
             {
-                instance.Invoke(new MethodInvoker(delegate
+                _ = instance.Invoke(new MethodInvoker(delegate
                         {
                             try
                             {
-                                var new_button = new UserClick(instance.myParent, instance, thing, MineEventType);
+                                UserClick new_button = new(instance.myParent, instance, thing, MineEventType);
                                 instance.panel1.Controls.Add(new_button);
                                 instance.AllButtons.Add(new_button);
                                 if (i == 0)
@@ -63,7 +61,7 @@ public partial class ListViewWindow : Form
 
             ;
 
-            instance.Invoke(new MethodInvoker(delegate
+            _ = instance.Invoke(new MethodInvoker(delegate
                     {
                         try
                         {
@@ -77,11 +75,11 @@ public partial class ListViewWindow : Form
             );
 
             if (Text == "Favorites")
-                instance.Invoke(new MethodInvoker(delegate
+                _ = instance.Invoke(new MethodInvoker(delegate
                         {
                             try
                             {
-                                var btnadd = new AddToListBTN(this, myParent);
+                                AddToListBTN btnadd = new(this, myParent);
                                 Controls.Add(btnadd);
                                 btnadd.Dock = DockStyle.Bottom;
                             }
@@ -91,9 +89,10 @@ public partial class ListViewWindow : Form
                         }
                     )
                 );
+
             ;
 
-            instance.Invoke(new MethodInvoker(delegate { instance.panel1.AutoScroll = true; }
+            _ = instance.Invoke(new MethodInvoker(delegate { instance.panel1.AutoScroll = true; }
                 )
             );
         }
@@ -109,10 +108,11 @@ public partial class ListViewWindow : Form
 
         myParent.Invoke(new MethodInvoker(delegate { documentTitle = myParent.webView21.CoreWebView2.DocumentTitle; }));
 
-        if (documentTitle == " " || documentTitle == "") documentTitle = "Loading...";
+        if (documentTitle is " " or "") documentTitle = "Loading...";
+
         ;
 
-        var new_button = new UserClick(myParent, this, $"{documentTitle},{my_browser.Source}", MineEventType);
+        UserClick new_button = new(myParent, this, $"{documentTitle},{my_browser.Source}", MineEventType);
         panel1.Controls.Add(new_button);
         AllButtons.Add(new_button);
     }
@@ -120,7 +120,7 @@ public partial class ListViewWindow : Form
     private void OnClose(object sender, FormClosingEventArgs e)
     {
         SpawnerItens.Interrupt();
-        myParent.OnFavorites = false;
+        myParent.onFavorites = false;
     }
 
     private void OnLoaded(object sender, EventArgs e)

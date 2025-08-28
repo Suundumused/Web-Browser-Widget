@@ -9,15 +9,16 @@ internal class ListClass : iListClass
 {
     public static void Init(dynamic Instance, List<string> Content, string title = "", string event_type = "navigate")
     {
-        var MasterThread = new Thread(() => NewThreadList(Instance, Content, title, event_type));
+        Thread MasterThread = new(() => NewThreadList(Instance, Content, title, event_type));
         MasterThread.Start();
     }
 
     public static void NewThreadList(dynamic Instance, List<string> Content, string title, string event_type)
     {
-        var ListView = new ListViewWindow(Instance, Content, title, event_type);
+        ListViewWindow ListView = new(Instance, Content, title, event_type);
 
         if (Instance is BrowserUI) Instance.MineFavorites = ListView;
+
         ;
 
         try

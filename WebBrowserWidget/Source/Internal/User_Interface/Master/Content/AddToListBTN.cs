@@ -21,16 +21,19 @@ public partial class AddToListBTN : UserControl
         {
             var documentTitle = "";
 
-            MyInstance.Invoke(new MethodInvoker(delegate
+            _ = MyInstance.Invoke(new MethodInvoker(delegate
             {
                 documentTitle = MyInstance.webView21.CoreWebView2.DocumentTitle;
             }));
 
-            if (documentTitle == " " || documentTitle == "") documentTitle = "Loading...";
+            if (documentTitle is " " or "") documentTitle = "Loading...";
+
             ;
 
             if (Db_manager.AddColumnsAndRows(MyParent.minePath, (documentTitle, MyInstance.webView21.Source.ToString()),
-                    ("Title", "Url"))) MyParent.AddPersonalBTN();
+                    ("Title", "Url")))
+                MyParent.AddPersonalBTN();
+
             ;
         }
         catch

@@ -4,6 +4,6 @@ namespace WebBrowserWidget.Source.Public.Interfaces.CustomsClass;
 
 public interface iCustomsClass
 {
-    public static abstract string Customize(BrowserUI? instance = null, string? myDeferral = null,
+    static abstract string Customize(BrowserUI? instance = null, string? myDeferral = null,
         dynamic? local_configs = null);
 }

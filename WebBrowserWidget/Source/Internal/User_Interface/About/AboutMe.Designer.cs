@@ -352,6 +352,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "About";
             TopMost = true;
+            Load += AboutMe_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)logoPictureBox).EndInit();
             tableLayoutPanel.ResumeLayout(false);

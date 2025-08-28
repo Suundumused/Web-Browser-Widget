@@ -2,5 +2,5 @@
 
 public interface iSettingsClass
 {
-    public static abstract void Sets(dynamic? Parent);
+    static abstract void Sets(dynamic? Parent);
 }

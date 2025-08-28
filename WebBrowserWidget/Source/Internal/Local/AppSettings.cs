@@ -43,7 +43,7 @@ internal static class AppSettings
         {
             if (UserSettingsExists()) return JObject.Parse(File.ReadAllText(file_path));
 
-            Program.RegStart.SetValue("Web_Widget", Master.ExecutablePath);
+            Program.RegStart.SetValue("Web_Widget", Master.executablePath);
             return Properties;
             ;
         }
@@ -67,7 +67,7 @@ internal static class AppSettings
 
             ;
             using (var file = File.CreateText(file_path))
-            using (var writer = new JsonTextWriter(file))
+            using (JsonTextWriter writer = new(file))
             {
                 writer.Formatting = Formatting.Indented;
                 data.WriteTo(writer);

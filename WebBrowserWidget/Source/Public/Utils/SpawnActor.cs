@@ -6,7 +6,7 @@ public static class SpawnActor
 {
     public static void CreateInstance(dynamic manager, string? Deferral = null, dynamic? configs = null)
     {
-        var ThreadA = new Thread(() => NewThread(manager, Deferral, configs));
+        Thread ThreadA = new(() => NewThread(manager, Deferral, configs));
         ThreadA.SetApartmentState(ApartmentState.STA);
         ThreadA.Start();
     }

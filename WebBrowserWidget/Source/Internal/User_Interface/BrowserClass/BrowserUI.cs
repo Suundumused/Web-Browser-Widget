@@ -17,7 +17,7 @@ public partial class BrowserUI : Form
     public BrowserUI(dynamic masterObject, string? Deferral = null, dynamic? configs = null)
     {
         Local_configs = configs;
-        MyDeferral = Deferral;
+        myDeferral = Deferral;
         manager = masterObject;
         manager.Instances.Add(this);
 
@@ -29,17 +29,17 @@ public partial class BrowserUI : Form
         SetStyle(ControlStyles.ResizeRedraw, true);
     }
 
-    public bool OnSettings { get; set; }
-    public bool OnFavorites { get; set; }
+    public bool onSettings { get; set; }
+    public bool onFavorites { get; set; }
     public dynamic? Local_configs { get; set; }
     public ListViewWindow? MineFavorites { get; set; } = null;
     public Local_Settings? MineSettings { get; set; } = null;
 
-    protected bool FirstTime { get; set; } = true;
+    protected bool firstTime { get; set; } = true;
 
-    public string? MyDeferral { get; set; }
-    protected string H_path { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
-    protected string F_path { get; } = Path.Combine(Program.basepath, "User", "favorites.csv");
+    public string? myDeferral { get; set; }
+    protected string hPath { get; } = Path.Combine(Program.basepath, "User", "historic.csv");
+    protected string fPath { get; } = Path.Combine(Program.basepath, "User", "favorites.csv");
 
     public Rectangle MineMaximizedBounds
     {
@@ -49,12 +49,12 @@ public partial class BrowserUI : Form
 
     private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
     {
-        Customize_Class.Save_Customs(manager.Instances);
+        CustomizeClass.Save_Customs(manager.Instances);
     }
 
     private void Form1_Load(object sender, EventArgs e)
     {
-        MyDeferral = Customize_Class.Customize(this, MyDeferral, Local_configs);
+        myDeferral = CustomizeClass.Customize(this, myDeferral, Local_configs);
         StartInstance();
     }
 
@@ -67,9 +67,10 @@ public partial class BrowserUI : Form
     {
         var base_path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        if (base_path == null || base_path == "") base_path = AppContext.BaseDirectory;
-        var browseExe = Path.Combine(base_path, "Runtime", "_version");
-        var cacheFolder = Path.Combine(Program.basepath, "User", "Cache");
+        if (base_path is null or "") base_path = AppContext.BaseDirectory;
+
+        _ = Path.Combine(base_path, "Runtime", "_version");
+        _ = Path.Combine(Program.basepath, "User", "Cache");
 
         //CoreWebView2Environment cwv2Environment = await CoreWebView2Environment.CreateAsync(browseExe, Path.Combine(Program.basepath, "Data"), new CoreWebView2EnvironmentOptions("--autoplay-    policy=no-user-gesture-required"));
         var cwv2Environment = await CoreWebView2Environment.CreateAsync(null, Path.Combine(Program.basepath, "Data"),
@@ -88,11 +89,11 @@ public partial class BrowserUI : Form
     {
         await InitBrowser();
         webView21.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
-        if (MyDeferral != null)
+        if (myDeferral != null)
         {
             try
             {
-                webView21.CoreWebView2.Navigate(MyDeferral);
+                webView21.CoreWebView2.Navigate(myDeferral);
             }
             catch (Exception ex)
             {
@@ -158,10 +159,11 @@ public partial class BrowserUI : Form
         var formattedDateTime = currentDateTime.ToString("dd MMMM yyyy HH:mm");
 
         manager.SavePeriodically();
-        if (FirstTime)
-            FirstTime = false;
+        if (firstTime)
+            firstTime = false;
         else
-            Db_manager.AddColumnsAndRows(H_path, (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
+            _ = Db_manager.AddColumnsAndRows(hPath, (formattedDateTime, webView21.Source.ToString()), ("Date", "Url"));
+
         ;
     }
 
@@ -222,19 +224,19 @@ public partial class BrowserUI : Form
     {
         if (textBox1.Text.Contains("://") && textBox1.Text.Contains(".")) return textBox1.Text;
 
-        if (textBox1.Text.Contains("://")) return $"{textBox1.Text}.com";
-
-        if (textBox1.Text.Contains(".")) return $"https://{textBox1.Text}";
-
-        return $"https://www.google.com/search?q={textBox1.Text}";
+        return textBox1.Text.Contains("://")
+            ? $"{textBox1.Text}.com"
+            : textBox1.Text.Contains(".")
+                ? $"https://{textBox1.Text}"
+                : $"https://www.google.com/search?q={textBox1.Text}";
         ;
     }
 
     private void Local_Settings(object sender, MouseEventArgs e)
     {
-        if (!OnSettings)
+        if (!onSettings)
         {
-            OnSettings = true;
+            onSettings = true;
             SettingsClass.Settings.Sets(this);
         }
 
@@ -243,10 +245,10 @@ public partial class BrowserUI : Form
 
     private void Favorites_Pressed(object sender, MouseEventArgs e)
     {
-        if (!OnFavorites)
+        if (!onFavorites)
         {
-            OnFavorites = true;
-            ListClass.Init(this, Db_manager.ReadCSV(F_path), "Favorites");
+            onFavorites = true;
+            ListClass.Init(this, Db_manager.ReadCSV(fPath), "Favorites");
         }
 
         ;
@@ -261,7 +263,8 @@ public partial class BrowserUI : Form
     {
         if (MineFavorites is not null)
         {
-            if (!MineFavorites.IsDisposed) MineFavorites.Invoke(new MethodInvoker(delegate { MineFavorites.Close(); }));
+            if (!MineFavorites.IsDisposed) _ = MineFavorites.Invoke(new MethodInvoker(MineFavorites.Close));
+
             ;
         }
 
@@ -269,7 +272,8 @@ public partial class BrowserUI : Form
 
         if (MineSettings is not null)
         {
-            if (!MineSettings.IsDisposed) MineSettings.Invoke(new MethodInvoker(delegate { MineSettings.Close(); }));
+            if (!MineSettings.IsDisposed) _ = MineSettings.Invoke(new MethodInvoker(MineSettings.Close));
+
             ;
         }
 

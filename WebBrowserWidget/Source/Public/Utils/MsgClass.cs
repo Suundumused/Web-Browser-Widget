@@ -6,7 +6,7 @@ public static class MsgClass
     {
         if (is_async)
         {
-            var ThreadA = new Thread(() => SpawnMSG(text, type));
+            Thread ThreadA = new(() => SpawnMSG(text, type));
             ThreadA.Start();
         }
         else
@@ -19,6 +19,6 @@ public static class MsgClass
 
     public static void SpawnMSG(string text, MessageBoxIcon type)
     {
-        MessageBox.Show(text, "Web Widget", MessageBoxButtons.OK, type);
+        _ = MessageBox.Show(text, "Web Widget", MessageBoxButtons.OK, type);
     }
 }

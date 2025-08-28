@@ -1,0 +1,22 @@
+# Top-most EditorConfig file
+root = true
+
+# Apply settings to all C# files
+[*.cs]
+
+# Indentation
+indent_style = space
+indent_size = 4
+
+# Use var for built-in types
+csharp_style_var_for_built_in_types = true:suggestion
+
+# Use camelCase for private fields
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case_style
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.camel_case_style.capitalization = camel_case

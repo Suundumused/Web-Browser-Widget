@@ -6,7 +6,7 @@ using WebBrowserWidget.Source.Public.Utils;
 
 namespace WebBrowserWidget.Source.Internal.Customize;
 
-internal class Customize_Class : iCustomsClass
+internal class CustomizeClass : iCustomsClass
 {
     public static string Customize(BrowserUI instance, string myDeferral, dynamic local_configs)
     {
@@ -50,7 +50,7 @@ internal class Customize_Class : iCustomsClass
         {
             var data = AppSettings.ReadSettings();
 
-            var dicts_list = new List<JObject>();
+            List<JObject> dicts_list = [];
 
             foreach (var obj in Instances)
             {
@@ -64,6 +64,7 @@ internal class Customize_Class : iCustomsClass
                             new JProperty("Position", new JArray(obj.Location.X, obj.Location.Y))
                         )
                     );
+
                 ;
             }
 
@@ -71,6 +72,7 @@ internal class Customize_Class : iCustomsClass
             var mineinstances = data["Instances"] as JObject;
             var propertiesToDelete = mineinstances.Properties().Where(p => p.Name.StartsWith("Instance_")).ToList();
             foreach (var property in propertiesToDelete) property.Remove();
+
             ;
             var i = 0;
             foreach (var dict in dicts_list)

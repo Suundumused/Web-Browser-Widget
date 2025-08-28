@@ -16,18 +16,18 @@ internal class Master
     private ToolStripMenuItem? Objects;
     private AboutMe? AboutOfMe { get; set; }
 
-    private string Ico_path { get; } = "";
-    public static string H_path { get; } = System.IO.Path.Combine(Program.basepath, "User", "historic.csv");
-    public static string F_path { get; } = System.IO.Path.Combine(Program.basepath, "User", "favorites.csv");
-    private string Path { get; } = System.IO.Path.Combine(Program.basepath, "Settings", "User_Settings.json");
-    private string DataPath { get; } = System.IO.Path.Combine(Program.basepath, "Data", "EBWebView");
-    public string? Base_path { get; set; } = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-    public static string ExecutablePath { get; } = Application.ExecutablePath;
+    private string icoPath { get; } = "";
+    public static string hPath { get; } = System.IO.Path.Combine(Program.basepath, "User", "historic.csv");
+    public static string fPath { get; } = System.IO.Path.Combine(Program.basepath, "User", "favorites.csv");
+    private string path { get; } = System.IO.Path.Combine(Program.basepath, "Settings", "User_Settings.json");
+    private string dataPath { get; } = System.IO.Path.Combine(Program.basepath, "Data", "EBWebView");
+    public string? basePath { get; set; } = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+    public static string executablePath { get; } = Application.ExecutablePath;
 
-    public bool OnFavorites { get; set; }
+    public bool onFavorites { get; set; }
 
-    private int MaxBSave { get; } = 1;
-    private int MaxBSaveCount { get; set; }
+    private int maxBSave { get; } = 1;
+    private int maxBSaveCount { get; set; }
 
     public List<dynamic> Instances { get; set; } = [];
 
@@ -36,11 +36,12 @@ internal class Master
         DeleteDataTask();
         AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
         Application.ApplicationExit += Application_ApplicationExit;
-        Instances = new List<dynamic>();
+        Instances = [];
 
         try
         {
-            if (Base_path == null || Base_path == "") Base_path = AppContext.BaseDirectory;
+            if (basePath is null or "") basePath = AppContext.BaseDirectory;
+
             SpawnTray();
         }
         catch (Exception ex)
@@ -54,14 +55,14 @@ internal class Master
 
     public void SavePeriodically()
     {
-        if (MaxBSaveCount < MaxBSave)
+        if (maxBSaveCount < maxBSave)
         {
-            MaxBSaveCount++;
+            maxBSaveCount++;
         }
         else
         {
-            Customize_Class.Save_Customs(Instances);
-            MaxBSaveCount = 0;
+            CustomizeClass.Save_Customs(Instances);
+            maxBSaveCount = 0;
         }
 
         ;
@@ -69,12 +70,12 @@ internal class Master
 
     private void CurrentDomain_ProcessExit(object? sender, EventArgs e)
     {
-        Customize_Class.Save_Customs(Instances);
+        CustomizeClass.Save_Customs(Instances);
     }
 
     private void Application_ApplicationExit(object? sender, EventArgs e)
     {
-        Customize_Class.Save_Customs(Instances);
+        CustomizeClass.Save_Customs(Instances);
     }
 
     private void SpawnTray()
@@ -93,54 +94,51 @@ internal class Master
         Icon_x.MouseClick += List_Instances;
         Icon_x.Visible = true;
 
-        var contextMenu = new ContextMenuStrip();
+        ContextMenuStrip contextMenu = new();
 
-        var AboutThis = new ToolStripMenuItem("About");
+        ToolStripMenuItem AboutThis = new("About");
         AboutThis.Click += AboutThisMe;
-        contextMenu.Items.Add(AboutThis);
+        _ = contextMenu.Items.Add(AboutThis);
 
-        var Instancer = new ToolStripMenuItem("New Window");
+        ToolStripMenuItem Instancer = new("New Window");
         Instancer.Click += New_Instance;
-        contextMenu.Items.Add(Instancer);
+        _ = contextMenu.Items.Add(Instancer);
 
         Objects = new ToolStripMenuItem("Instances");
-        contextMenu.Items.Add(Objects);
+        _ = contextMenu.Items.Add(Objects);
 
-        var menuItem1 = new ToolStripMenuItem("Settings");
-        contextMenu.Items.Add(menuItem1);
+        ToolStripMenuItem menuItem1 = new("Settings");
+        _ = contextMenu.Items.Add(menuItem1);
 
         AutoBoot = new ToolStripMenuItem("Auto Boot");
         AutoBoot.Click += setAutoBoot;
-        menuItem1.DropDownItems.Add(AutoBoot);
+        _ = menuItem1.DropDownItems.Add(AutoBoot);
 
-        var Clear = new ToolStripMenuItem("Clear history");
+        ToolStripMenuItem Clear = new("Clear history");
         Clear.Click += Clear_Historic;
-        menuItem1.DropDownItems.Add(Clear);
+        _ = menuItem1.DropDownItems.Add(Clear);
 
-        var ClearData = new ToolStripMenuItem("Clear User Data");
+        ToolStripMenuItem ClearData = new("Clear User Data");
         ClearData.Click += Clear_User_Data;
-        menuItem1.DropDownItems.Add(ClearData);
+        _ = menuItem1.DropDownItems.Add(ClearData);
 
-        var setsclear = new ToolStripMenuItem("Clear settings");
+        ToolStripMenuItem setsclear = new("Clear settings");
         setsclear.Click += Clear_Settings;
-        menuItem1.DropDownItems.Add(setsclear);
+        _ = menuItem1.DropDownItems.Add(setsclear);
 
-        var historic = new ToolStripMenuItem("Historic");
+        ToolStripMenuItem historic = new("Historic");
         historic.Click += History;
-        contextMenu.Items.Add(historic);
+        _ = contextMenu.Items.Add(historic);
 
-        var menuItem2 = new ToolStripMenuItem("Exit");
+        ToolStripMenuItem menuItem2 = new("Exit");
         menuItem2.Click += Exit;
-        contextMenu.Items.Add(menuItem2);
+        _ = contextMenu.Items.Add(menuItem2);
 
         Icon_x.ContextMenuStrip = contextMenu;
 
         var data = AppSettings.ReadSettings();
 
-        if ((bool)data["AutoBoot"])
-            AutoBoot.CheckState = CheckState.Checked;
-        else
-            AutoBoot.CheckState = CheckState.Unchecked;
+        AutoBoot.CheckState = (bool)data["AutoBoot"] ? CheckState.Checked : CheckState.Unchecked;
         ;
         Application.Run();
     }
@@ -152,7 +150,8 @@ internal class Master
         {
             if ((bool)data["DeleteData"])
             {
-                if (System.IO.Path.Exists(DataPath)) Directory.Delete(DataPath, true);
+                if (System.IO.Path.Exists(dataPath)) Directory.Delete(dataPath, true);
+
                 ;
                 data["DeleteData"] = false;
                 AppSettings.WriteSettings(data);
@@ -214,10 +213,10 @@ internal class Master
 
     private void History(object? sender, EventArgs e)
     {
-        if (!OnFavorites)
+        if (!onFavorites)
         {
-            OnFavorites = true;
-            ListClass.Init(this, Db_manager.ReadCSV(H_path), "Historic");
+            onFavorites = true;
+            ListClass.Init(this, Db_manager.ReadCSV(hPath), "Historic");
         }
 
         ;
@@ -227,7 +226,8 @@ internal class Master
     {
         try
         {
-            if (File.Exists(H_path)) File.Delete(H_path);
+            if (File.Exists(hPath)) File.Delete(hPath);
+
             ;
         }
         catch (Exception es)
@@ -242,7 +242,8 @@ internal class Master
     {
         try
         {
-            if (File.Exists(Path)) File.Delete(Path);
+            if (File.Exists(path)) File.Delete(path);
+
             ;
         }
         catch (Exception ex)
@@ -273,7 +274,7 @@ internal class Master
                 {
                     var documentTitle = "";
 
-                    object_.Invoke(new MethodInvoker(delegate
+                    _ = object_.Invoke(new MethodInvoker(delegate
                             {
                                 try
                                 {
@@ -288,11 +289,12 @@ internal class Master
                             }
                         )
                     );
-                    if (documentTitle == " " || documentTitle == "") documentTitle = "Loading...";
+                    if (documentTitle is " " or "") documentTitle = "Loading...";
+
                     ;
-                    var Item = new ToolStripMenuItem(documentTitle);
+                    ToolStripMenuItem Item = new(documentTitle);
                     Item.Click += (sender, e) => browser_focus(sender, e, object_);
-                    Objects.DropDownItems.Add(Item);
+                    _ = Objects.DropDownItems.Add(Item);
                 }
                 catch
                 {
@@ -346,7 +348,7 @@ internal class Master
         {
             try
             {
-                Program.RegStart.SetValue("Web_Widget", ExecutablePath);
+                Program.RegStart.SetValue("Web_Widget", executablePath);
                 data["AutoBoot"] = true;
                 AutoBoot.CheckState = CheckState.Checked;
             }

@@ -2,5 +2,5 @@
 
 public interface iBrowser
 {
-    public static abstract void Init(dynamic? masterObject = null, string? Deferral = null, dynamic? configs = null);
+    static abstract void Init(dynamic? masterObject = null, string? Deferral = null, dynamic? configs = null);
 }

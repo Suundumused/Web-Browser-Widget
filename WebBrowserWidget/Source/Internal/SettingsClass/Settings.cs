@@ -9,15 +9,16 @@ internal class Settings : iSettingsClass
 {
     public static void Sets(dynamic? Parent)
     {
-        var ThreadA = new Thread(() => Init(Parent));
+        Thread ThreadA = new(() => Init(Parent));
         ThreadA.Start();
     }
 
     private static void Init(dynamic? Parent)
     {
-        var mineSettings = new Local_Settings(Parent);
+        Local_Settings mineSettings = new(Parent);
 
         if (Parent is BrowserUI) Parent.MineSettings = mineSettings;
+
         ;
 
         try

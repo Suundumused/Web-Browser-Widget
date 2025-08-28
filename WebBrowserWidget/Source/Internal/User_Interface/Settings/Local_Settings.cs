@@ -25,6 +25,7 @@ public partial class Local_Settings : Form
         colorDialog1.Color = myParent.panel2.BackColor;
 
         if (colorDialog1.ShowDialog() == DialogResult.OK) myParent.panel2.BackColor = colorDialog1.Color;
+
         ;
     }
 
@@ -35,6 +36,6 @@ public partial class Local_Settings : Form
 
     private void OnClose(object sender, FormClosingEventArgs e)
     {
-        myParent.OnSettings = false;
+        myParent.onSettings = false;
     }
 }

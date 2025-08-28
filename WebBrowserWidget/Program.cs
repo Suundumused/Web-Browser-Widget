@@ -29,13 +29,13 @@ public static class Program
         ;
 
         Application.EnableVisualStyles();
-        var Manager = new Master();
+        Master Manager = new();
 
         try
         {
-            Directory.CreateDirectory(Path.Combine(basepath, "Settings"));
-            Directory.CreateDirectory(Path.Combine(basepath, "User", "Cache"));
-            Directory.CreateDirectory(Path.Combine(basepath, "Data"));
+            _ = Directory.CreateDirectory(Path.Combine(basepath, "Settings"));
+            _ = Directory.CreateDirectory(Path.Combine(basepath, "User", "Cache"));
+            _ = Directory.CreateDirectory(Path.Combine(basepath, "Data"));
         }
         catch (Exception ex)
         {
@@ -45,11 +45,12 @@ public static class Program
 
         ;
 
-        var MasterThread = new Thread(() => Manager.Init());
+        Thread MasterThread = new(Manager.Init);
         MasterThread.Start();
 
         foreach (JProperty entry in AppSettings.ReadSettings()["Instances"])
             SpawnActor.CreateInstance(Manager, configs: entry);
+
         ;
         MasterThread.Join();
     }

@@ -12,13 +12,13 @@ Designed to be lightweight, modern and highly customizable, it delivers fast bro
 ## ✨ Features
 
 ### 🌟 Transparency  
-Achieve a stunning aesthetic by customizing the transparency of your Widget.  
+- Achieve a stunning aesthetic by customizing the transparency of your Widget.  
 ![](https://raw.githubusercontent.com/Suundumused/Web-Browser-Widget/main/README_ASSETS/Captura%20de%20tela%202024-03-02%20162926.png)
 
 ---
 
 ### 🎨 Change Top Bar Color  
-Personalize the top bar color of the widget. Choose from a spectrum of colors to match your mood, desktop theme, or simply to create a vibrant and dynamic look.  
+- Personalize the top bar color of the widget. Choose from a spectrum of colors to match your mood, desktop theme, or simply to create a vibrant and dynamic look.  
 ![](https://raw.githubusercontent.com/Suundumused/Web-Browser-Widget/main/README_ASSETS/Captura%20de%20tela%202024-03-02%20164156.png)
 
 ---
@@ -42,7 +42,7 @@ Effortlessly manage different instances, each maintaining its settings.
 ---
 
 ### 🔄 Start with System  
-Web Widget is configured to launch automatically with your system.  
+- Web Widget is configured to launch automatically with your system.  
 ![](https://raw.githubusercontent.com/Suundumused/Web-Browser-Widget/main/README_ASSETS/Captura%20de%20tela%202024-03-02%20164934.png)
 
 ---
